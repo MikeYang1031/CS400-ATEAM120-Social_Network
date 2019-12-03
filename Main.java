@@ -49,10 +49,10 @@ public class Main extends Application {
             TextField feedText = new TextField();
             Button feedButton =  new Button("Submit");
         
-            feedLabel.setStyle("-fx-background-color: orange");
+            feedLabel.setStyle("-fx-background-color: #FFC000");
             feedLabel.setPrefSize(60, 25);
             feedText.setPrefWidth(650);
-            feedButton.setStyle("-fx-background-color: orange");
+            feedButton.setStyle("-fx-background-color: #FFC000");
             feedback.setSpacing(10);
             feedback.getChildren().addAll(feedLabel, feedText, feedButton);
             border.setBottom(feedback);
@@ -82,11 +82,11 @@ public class Main extends Application {
             Button button4 = new Button("Save And Quit");
             Button button5 = new Button("Quit Without Save");
 
-	    button1.setStyle("-fx-background-color: orange");
-            button2.setStyle("-fx-background-color: orange");
-            button3.setStyle("-fx-background-color: orange");
-            button4.setStyle("-fx-background-color: orange");
-            button5.setStyle("-fx-background-color: orange");
+	    button1.setStyle("-fx-background-color: #FFC000");
+            button2.setStyle("-fx-background-color: #FFC000");
+            button3.setStyle("-fx-background-color: #FFC000");
+            button4.setStyle("-fx-background-color: #FFC000");
+            button5.setStyle("-fx-background-color: #FFC000");
         
 
    	    button1.setTranslateX(450);
