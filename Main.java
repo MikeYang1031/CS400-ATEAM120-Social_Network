@@ -39,6 +39,19 @@ public class Main extends Application {
         
         // set background color for the pane
         border.setStyle("-fx-background-color: darkgray");
+        
+        // set feedback
+        HBox feedback = new HBox();
+		Label feedLabel  = new Label("Feedback");
+        TextField feedText = new TextField();
+        Button feedButton =  new Button("Submit");
+        
+        feedLabel.setStyle("-fx-background-color: orange");
+        feedLabel.setPrefSize(60, 25);
+        feedButton.setStyle("-fx-background-color: orange");
+        feedback.setSpacing(10);
+        feedback.getChildren().addAll(feedLabel, feedText, feedButton);
+        
 
         // set title for the stage
         stage.setTitle("the title for stage");
