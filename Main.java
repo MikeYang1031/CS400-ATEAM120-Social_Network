@@ -74,6 +74,29 @@ public class Main extends Application {
             imageView.setFitWidth(300);
            
             border.setLeft(imageView);
+		
+	    // set top menu
+     	    Button button1 = new Button("Back");
+            Button button2 = new Button("Undo");
+            Button button3 = new Button("Redo");
+            Button button4 = new Button("Save And Quit");
+            Button button5 = new Button("Quit Without Save");
+
+	    button1.setStyle("-fx-background-color: orange");
+            button2.setStyle("-fx-background-color: orange");
+            button3.setStyle("-fx-background-color: orange");
+            button4.setStyle("-fx-background-color: orange");
+            button5.setStyle("-fx-background-color: orange");
+        
+
+   	    button1.setTranslateX(450);
+	    button2.setTranslateX(450);
+	    button3.setTranslateX(450);
+	    button4.setTranslateX(450);
+	    button5.setTranslateX(450);
+
+	    HBox hbox = new HBox(button1, button2, button3, button4, button5);
+	    border.setTop(hbox);
            
 		
            // Add the vertical box to the center of the root pane
