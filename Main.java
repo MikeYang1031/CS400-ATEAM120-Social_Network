@@ -74,7 +74,34 @@ public class Main extends Application {
          imageView.setFitWidth(300);
            
          border.setLeft(imageView);
-           
+         
+		        VBox vb2 = new VBox();
+       
+    
+       Button load = new Button("Load");
+       load.setMinSize(100, 30);
+       load.setTranslateY(300);
+       load.setTranslateX(-150);
+
+       Button exp = new Button("Export");
+       exp.setMinSize(100, 30);
+       exp.setTranslateY(350);
+       exp.setTranslateX(-150);
+
+       Button dis = new Button("Display");
+       dis.setMinSize(100, 30);
+       dis.setTranslateY(400);
+       dis.setTranslateX(-150);
+       
+		border.setRight(vb2);
+       
+       
+       
+       
+      
+       vb2.getChildren().add(load);
+       vb2.getChildren().add(exp);
+       vb2.getChildren().add(dis);
 		
          // Add the vertical box to the center of the root pane
      	 //root.setCenter(vbox);
