@@ -37,7 +37,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-	    // Main layout is Border Pane example (top,left,center,right,bottom)
+	    // Main layout is Border Pane 
 	    BorderPane border = new BorderPane();
 		
 	    // set background color for the pane
