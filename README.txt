@@ -11,7 +11,7 @@ Team Members:
 5. Zonglin Yang, lecture 002, xteam 70
  
 Which team members were on same xteam together?
-None
+Kaibiao Ruan and Kunlun Wang
 
 Other notes or comments to the grader:
 None
