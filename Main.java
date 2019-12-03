@@ -1,5 +1,7 @@
 package application;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import javafx.application.Application;
@@ -35,36 +37,56 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		// Main layout is Border Pane example (top,left,center,right,bottom)
-		BorderPane border = new BorderPane();
+	    // Main layout is Border Pane example (top,left,center,right,bottom)
+	    BorderPane border = new BorderPane();
 		
-		// set background color for the pane
-        border.setStyle("-fx-background-color: darkgray");
+	    // set background color for the pane
+            border.setStyle("-fx-background-color: #BFBFBF");
         
-        // set feedback
-        HBox feedback = new HBox();
-		Label feedLabel  = new Label("Feedback");
-        TextField feedText = new TextField();
-        Button feedButton =  new Button("Submit");
+            // set feedback
+            HBox feedback = new HBox();
+	    Label feedLabel  = new Label("Feedback");
+            TextField feedText = new TextField();
+            Button feedButton =  new Button("Submit");
         
-        feedLabel.setStyle("-fx-background-color: orange");
-        feedLabel.setPrefSize(60, 25);
-        feedButton.setStyle("-fx-background-color: orange");
-        feedback.setSpacing(10);
-        feedback.getChildren().addAll(feedLabel, feedText, feedButton);
+            feedLabel.setStyle("-fx-background-color: orange");
+            feedLabel.setPrefSize(60, 25);
+            feedText.setPrefWidth(650);
+            feedButton.setStyle("-fx-background-color: orange");
+            feedback.setSpacing(10);
+            feedback.getChildren().addAll(feedLabel, feedText, feedButton);
+            border.setBottom(feedback);
         
-        border.setBottom(feedback);
+            FileInputStream inputImage = null;
+	    
+	    // set image
+            try {
+                inputImage = new FileInputStream("/Users/yuanxixie/ATEAM.png");
+            } catch (FileNotFoundException e) {
+                   // TODO Auto-generated catch block
+                   e.printStackTrace();
+            }
+           
+            Image image = new Image(inputImage);
+            ImageView imageView = new ImageView(image);
+
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(300);
+           
+            border.setLeft(imageView);
+           
 		
-        // Add the vertical box to the center of the root pane
-     	//root.setCenter(vbox);
-     	Scene mainScene = new Scene(border, WINDOW_WIDTH, WINDOW_HEIGHT);
+           // Add the vertical box to the center of the root pane
+     	   //root.setCenter(vbox);
+     	   Scene mainScene = new Scene(border, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-     	// Add the stuff and set the primary stage
-     	primaryStage.setTitle(APP_TITLE);
-     	primaryStage.setScene(mainScene);
-     	primaryStage.show();
-	}
-
+     	   // Add the stuff and set the primary stage
+     	   primaryStage.setTitle(APP_TITLE);
+     	   primaryStage.setScene(mainScene);
+     	   primaryStage.show();
+	   }
+		               
+		
 	/**
 	 * @param args
 	 */
