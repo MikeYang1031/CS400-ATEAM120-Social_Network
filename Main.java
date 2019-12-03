@@ -36,6 +36,9 @@ public class Main extends Application {
     // Launch the application
     public void start(Stage stage) {
         BorderPane border = new BorderPane();
+        
+        // set background color for the pane
+        border.setStyle("-fx-background-color: darkgray");
 
         // set title for the stage
         stage.setTitle("the title for stage");
