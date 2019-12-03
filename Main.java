@@ -61,7 +61,7 @@ public class Main extends Application {
         FileInputStream inputImage = null;
 		  
         try {
-                   inputImage = new FileInputStream("/Users/yuanxixie/ATEAM.png");
+                   inputImage = new FileInputStream("ATEAM.png");
            } catch (FileNotFoundException e) {
                    // TODO Auto-generated catch block
                    e.printStackTrace();
