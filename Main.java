@@ -28,7 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    // store any command-line arguments that were entered.
+    / arguments that were entered.
     // NOTE: this.getParameters().getRaw() will get these also
 
     @FXML
