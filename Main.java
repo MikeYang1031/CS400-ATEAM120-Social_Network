@@ -40,7 +40,7 @@ public class Main extends Application {
         // set title for the stage
         stage.setTitle("the title for stage");
 
-        // create a label
+        // create a label jarvis
         VBox vb = new VBox();
         Label L = new Label("CS400 MyFirstJavaFX");
         vb.getChildren().addAll(L);
