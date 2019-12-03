@@ -2,8 +2,8 @@
 //
 // Title: HelloFX
 // Course: CS 400
-// Author: Zonglin Yang Kunlun Wang
-// Email: zyang439@wisc.edu
+// Author: Zonglin Yang, Kunlun Wang, Yuanxi Xie
+// Email: zyang439@wisc.edu yxie85@wisc.edu
 //
 //////////////////////////////////////////////////////////////////////////////
 
