@@ -2,7 +2,7 @@
 //
 // Title: HelloFX
 // Course: CS 400
-// Author: Zonglin Yang
+// Author: Zonglin Yang Kunlun Wang
 // Email: zyang439@wisc.edu
 //
 //////////////////////////////////////////////////////////////////////////////
@@ -28,7 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    / arguments that were entered.
+    // store any command-line arguments that were entered.
     // NOTE: this.getParameters().getRaw() will get these also
 
     @FXML
