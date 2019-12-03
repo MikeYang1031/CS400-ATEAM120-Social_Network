@@ -1,43 +1,44 @@
-//////////////////// ALL ASSIGNMENTS INCLUDE THIS SECTION /////////////////////
-//
-// Title: HelloFX
-// Course: CS 400
-// Author: Zonglin Yang, Kunlun Wang, Yuanxi Xie
-// Email: zyang439@wisc.edu yxie85@wisc.edu
-//
-//////////////////////////////////////////////////////////////////////////////
-
 package application;
 
+import java.util.List;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    // store any command-line arguments that were entered.
-    // NOTE: this.getParameters().getRaw() will get these also
+	// store any command-line arguments that were entered.
+	// NOTE: this.getParameters().getRaw() will get these also
+	private List<String> args;
 
-    @FXML
-    public Button close = new Button("Done");
-    // Launch the application
-    public void start(Stage stage) {
-        BorderPane border = new BorderPane();
-        
-        // set background color for the pane
+	private static final int WINDOW_WIDTH = 800;
+	private static final int WINDOW_HEIGHT = 600;
+	private static final String APP_TITLE = "Social Network";
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+
+		// Main layout is Border Pane example (top,left,center,right,bottom)
+		BorderPane border = new BorderPane();
+		
+		// set background color for the pane
         border.setStyle("-fx-background-color: darkgray");
         
         // set feedback
@@ -52,69 +53,22 @@ public class Main extends Application {
         feedback.setSpacing(10);
         feedback.getChildren().addAll(feedLabel, feedText, feedButton);
         
+        border.setBottom(feedback);
+		
+        // Add the vertical box to the center of the root pane
+     	//root.setCenter(vbox);
+     	Scene mainScene = new Scene(border, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        // set title for the stage
-        stage.setTitle("the title for stage");
+     	// Add the stuff and set the primary stage
+     	primaryStage.setTitle(APP_TITLE);
+     	primaryStage.setScene(mainScene);
+     	primaryStage.show();
+	}
 
-        // create a label jarvis
-        VBox vb = new VBox();
-        Label L = new Label("CS400 MyFirstJavaFX");
-        vb.getChildren().addAll(L);
-        vb.setAlignment(Pos.CENTER);
-
-        String car_types[] =
-            {"seden", "coupe", "hatchback", "van", "pickup truck",};
-
-        // Create a combo box
-        HBox hb = new HBox();
-        ComboBox<String> cb =
-            new ComboBox<String>(FXCollections.observableArrayList(car_types));
-        hb.getChildren().addAll(cb);
-        hb.setAlignment(Pos.CENTER);
-
-        // create a image
-        Image i = new Image("pic.jpg");
-
-        ImageView iw = new ImageView(i);
-        iw.setFitHeight(400);
-        iw.setFitWidth(400);
-
-        // Bottom button
-        VBox vb2 = new VBox();
-        vb2.getChildren().addAll(close);
-        vb2.setAlignment(Pos.CENTER);
-
-        // create a color picker
-        HBox hb2 = new HBox();
-        ColorPicker cp = new ColorPicker(Color.BLUE);
-        hb2.getChildren().addAll(cp);
-        hb2.setAlignment(Pos.CENTER);
-
-        border.setTop(vb);
-        border.setBottom(vb2);
-        border.setLeft(hb);
-        border.setRight(hb2);
-        border.setCenter(iw);
-
-        // Create a scene
-        Scene scene = new Scene(border, 800, 600);
-
-        // Set the scene
-        stage.setScene(scene);
-
-        stage.show();
-
-    }
-//    @FXML
-//    public void handleCloseButtonAction(ActionEvent event) {
-//        
-//        Stage stage = (Stage)close.getScene().getWindow();
-//        stage.close();
-//    }
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		launch(args);
+	}
 }
