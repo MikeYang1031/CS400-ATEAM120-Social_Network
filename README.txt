@@ -1,12 +1,12 @@
 README
-Course: cs400 
-Semester: Fall 2019 
-Project name: Social Network 
+Course: cs400
+Semester: Fall 2019
+Project name: Social Network
 
-Team Members: 
+Team Members:
 1. Kaibiao Ruan, lecture 002, xteam 107
 2. Kunlun Wang, lecture 002, xteam 107
-3. Yuanxi Xie, lecture 002, xteam 75
+3. Yuanxi Xie, lecture 002, yxie85@wisc.edu
 4. Yuxiao Jia, lecture 002, jia44@wisc.edu
 5. Zonglin Yang, lecture 002, xteam 70
  
