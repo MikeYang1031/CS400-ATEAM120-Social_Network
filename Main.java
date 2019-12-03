@@ -99,8 +99,9 @@ public class Main extends Application {
              Button button1 = new Button("Set central user");
              TextField t1 = new TextField();
              t1.setMaxWidth(200);
-//     		Button button2 = new Button("Undo");
-//     		Button button3 = new Button("Redo");
+     		Button button2 = new Button("User1");
+     		Button button3 = new Button("User2");
+     		button3.setTranslateX(100);
 //     		Button button4 = new Button("Save And Quit");
 //     		Button button5 = new Button("Quit Without Save");
 
@@ -116,10 +117,13 @@ public class Main extends Application {
 //     				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
 //     		
           
-     		VBox hbox = new VBox(button1, t1);
-    		secondaryLayout.setTop(hbox);
+     		VBox vbox = new VBox(button1, t1);
+    		secondaryLayout.setTop(vbox);
              Scene secondScene = new Scene(secondaryLayout, 800, 600);
-
+            HBox hbox = new HBox(button2, button3);
+            hbox.setTranslateX(230);
+            hbox.setTranslateY(230);
+            secondaryLayout.setCenter(hbox);
              // New window 
              Stage newWindow = new Stage();
              newWindow.setTitle("Friend Relationship");
