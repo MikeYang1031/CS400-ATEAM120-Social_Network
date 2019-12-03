@@ -37,77 +37,81 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-	    // Main layout is Border Pane 
-	    BorderPane border = new BorderPane();
+		// Main layout is Border Pane example (top,left,center,right,bottom)
+		BorderPane border = new BorderPane();
 		
-	    // set background color for the pane
-            border.setStyle("-fx-background-color: #BFBFBF");
+		// set background color for the pane
+        border.setStyle("-fx-background-color: #BFBFBF");
         
-            // set feedback
-            HBox feedback = new HBox();
-	    Label feedLabel  = new Label("Feedback");
-            TextField feedText = new TextField();
-            Button feedButton =  new Button("Submit");
+        // set feedback
+        HBox feedback = new HBox();
+		Label feedLabel  = new Label("Feedback");
+        TextField feedText = new TextField();
+        Button feedButton =  new Button("Submit");
         
-            feedLabel.setStyle("-fx-background-color: #FFC000");
-            feedLabel.setPrefSize(60, 25);
-            feedText.setPrefWidth(650);
-            feedButton.setStyle("-fx-background-color: #FFC000");
-            feedback.setSpacing(10);
-            feedback.getChildren().addAll(feedLabel, feedText, feedButton);
-            border.setBottom(feedback);
+        feedLabel.setStyle("-fx-background-color: #FFC000");
+        feedLabel.setPrefSize(60, 25);
+        feedText.setPrefWidth(650);
+        feedButton.setStyle("-fx-background-color: #FFC000; "
+        		+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+        feedback.setSpacing(10);
+        feedback.getChildren().addAll(feedLabel, feedText, feedButton);
+        border.setBottom(feedback);
         
-            FileInputStream inputImage = null;
-	    
-	    // set image
-            try {
-                inputImage = new FileInputStream("/Users/yuanxixie/ATEAM.png");
-            } catch (FileNotFoundException e) {
+        FileInputStream inputImage = null;
+		  
+        try {
+                   inputImage = new FileInputStream("/Users/yuanxixie/ATEAM.png");
+           } catch (FileNotFoundException e) {
                    // TODO Auto-generated catch block
                    e.printStackTrace();
-            }
+           }
            
-            Image image = new Image(inputImage);
-            ImageView imageView = new ImageView(image);
+         Image image = new Image(inputImage);
+         ImageView imageView = new ImageView(image);
 
-            imageView.setFitHeight(100);
-            imageView.setFitWidth(300);
+         imageView.setFitHeight(100);
+         imageView.setFitWidth(300);
            
-            border.setLeft(imageView);
-		
-	    // set top menu
-     	    Button button1 = new Button("Back");
-            Button button2 = new Button("Undo");
-            Button button3 = new Button("Redo");
-            Button button4 = new Button("Save And Quit");
-            Button button5 = new Button("Quit Without Save");
-
-	    button1.setStyle("-fx-background-color: #FFC000");
-            button2.setStyle("-fx-background-color: #FFC000");
-            button3.setStyle("-fx-background-color: #FFC000");
-            button4.setStyle("-fx-background-color: #FFC000");
-            button5.setStyle("-fx-background-color: #FFC000");
-        
-
-   	    button1.setTranslateX(450);
-	    button2.setTranslateX(450);
-	    button3.setTranslateX(450);
-	    button4.setTranslateX(450);
-	    button5.setTranslateX(450);
-
-	    HBox hbox = new HBox(button1, button2, button3, button4, button5);
-	    border.setTop(hbox);
+         border.setLeft(imageView);
            
 		
-           // Add the vertical box to the center of the root pane
-     	   //root.setCenter(vbox);
-     	   Scene mainScene = new Scene(border, WINDOW_WIDTH, WINDOW_HEIGHT);
+         // Add the vertical box to the center of the root pane
+     	 //root.setCenter(vbox);
+     	 Scene mainScene = new Scene(border, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-     	   // Add the stuff and set the primary stage
-     	   primaryStage.setTitle(APP_TITLE);
-     	   primaryStage.setScene(mainScene);
-     	   primaryStage.show();
-	   }
+     	 // Add the stuff and set the primary stage
+     	 primaryStage.setTitle(APP_TITLE);
+     	 primaryStage.setScene(mainScene);
+     	 primaryStage.show();
+     	 
+     	 // set top menu
+     	 Button button1 = new Button("Back");
+     	 Button button2 = new Button("Undo");
+     	 Button button3 = new Button("Redo");
+     	 Button button4 = new Button("Save And Quit");
+     	 Button button5 = new Button("Quit Without Save");
+
+     	 button1.setStyle("-fx-background-color: #FFC000; "
+     	 		+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+     	 button2.setStyle("-fx-background-color: #FFC000; "
+     	 		+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+     	 button3.setStyle("-fx-background-color: #FFC000; "
+     	 		+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+     	 button4.setStyle("-fx-background-color: #FFC000; "
+     	 		+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+     	 button5.setStyle("-fx-background-color: #FFC000; "
+     	 		+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+
+     	 button1.setTranslateX(450);
+     	 button2.setTranslateX(450);
+     	 button3.setTranslateX(450);
+     	 button4.setTranslateX(450);
+     	 button5.setTranslateX(450);
+
+     	 HBox hbox = new HBox(button1, button2, button3, button4, button5);
+     	 border.setTop(hbox);
+	}
 		               
 		
 	/**
