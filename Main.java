@@ -200,6 +200,7 @@ public class Main extends Application {
 		HBox hbox = new HBox(button1, button2, button3, button4, button5);
 		border.setTop(hbox);
 
+		VBox left = new VBox();
 		VBox vb = new VBox();
 		// Label L = new Label("CS400 MyFirstJavaFX");
 
@@ -215,9 +216,14 @@ public class Main extends Application {
 		Image image = new Image(inputImage);
 		ImageView imageView = new ImageView(image);
 
-		imageView.setFitHeight(100);
-		imageView.setFitWidth(300);
+		imageView.setFitHeight(120);
+		imageView.setFitWidth(400);
 		Label user = new Label("User: ");
+		
+		// Empty space
+				Region r = new Region();
+				r.setPrefHeight(10);
+				r.setPrefWidth(200);
 		// Textfield 1 for user
 		TextField t1 = new TextField();
 		t1.setPrefHeight(40);
@@ -241,9 +247,9 @@ public class Main extends Application {
 		userButtons.setAlignment(Pos.CENTER_RIGHT);
 
 		// Empty space
-		Region r = new Region();
-		r.setPrefHeight(30);
-		r.setPrefWidth(200);
+		Region r3 = new Region();
+		r3.setPrefHeight(30);
+		r3.setPrefWidth(200);
 
 		// Textfield 2
 		TextField t2 = new TextField();
@@ -294,11 +300,16 @@ public class Main extends Application {
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
 		// Vbox
 		vb.setSpacing(5);
-		vb.setPadding(new Insets(0, 0, 0, 70));
-		vb.getChildren().addAll(imageView, vt1, userButtons, r, vt2, friendship, t3, removeAll);
+		vb.setPadding(new Insets(0, 0, 0, 50));
+		vb.getChildren().addAll(r,vt1, userButtons, r3, vt2, friendship, t3, removeAll);
 		vb.setAlignment(Pos.CENTER);
+		
+		//bigger left VBox
+		left.setSpacing(5);
+		left.getChildren().addAll(imageView, vb);
+		left.setAlignment(Pos.TOP_CENTER);
 
-		border.setLeft(vb);
+		border.setLeft(left);
 	}
 
 	/**
