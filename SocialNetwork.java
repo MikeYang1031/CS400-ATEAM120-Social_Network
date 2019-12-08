@@ -80,17 +80,24 @@ public class SocialNetwork implements SocialNetworkADT {
         return friendSet;
     }
 
-    @Override
-    public Set<Person> getMutualFriends(String person1, String person2) {
+      @Override
+    public Set<String> getMutualFriends(String person1, String person2) {
+
         List<String> friend1 = graph.getAdjacentVerticesOf(person1);
         List<String> friend2 = graph.getAdjacentVerticesOf(person2);
-        
-        for (int i = 0 ; i < friend1.size(); i++) {
-            for (int j = 0; j < friend2.size(); j++){
-               
+
+        Set<String> mFriend = new HashSet<String>();
+
+        for (int i = 0; i < friend1.size(); i++) {
+            for (int j = 0; j < friend2.size(); j++) {
+
+                if (friend1.get(i).equals(friend2.get(j))) {
+                    mFriend.add(friend1.get(i));
+                }
+
             }
         }
-        intersection(friend1,friend2);
+
         return null;
     }
 
