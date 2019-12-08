@@ -1,10 +1,13 @@
 package application;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 
@@ -67,16 +70,27 @@ public class SocialNetwork implements SocialNetworkADT {
     }
 
     @Override
-    public List<String> getFriends(String person) {
-        List<String> friend = graph.getAdjacentVerticesOf(person);
-        // TODO Auto-generated method stub
-        return friend;
+    public Set<String> getFriends(String person) {
+      List<String> friendsList = graph.getAdjacentVerticesOf(person);
+      Set<String> friendSet = new HashSet<String>();
+      
+      for (String friend: friendsList) {
+        friendSet.add(friend);
+    }
+        return friendSet;
     }
 
     @Override
     public Set<Person> getMutualFriends(String person1, String person2) {
-
-        // TODO Auto-generated method stub
+        List<String> friend1 = graph.getAdjacentVerticesOf(person1);
+        List<String> friend2 = graph.getAdjacentVerticesOf(person2);
+        
+        for (int i = 0 ; i < friend1.size(); i++) {
+            for (int j = 0; j < friend2.size(); j++){
+               
+            }
+        }
+        intersection(friend1,friend2);
         return null;
     }
 
@@ -93,11 +107,46 @@ public class SocialNetwork implements SocialNetworkADT {
     }
 
     @Override
-    public void loadFromFile(File file) {
+    public boolean setCentral(String person) {
         // TODO Auto-generated method stub
-
+        return false;
+    }
+    
+    @Override
+    public void loadFromFile(File file) {
+        try {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] args = line.split(" ");
+                if(args.length == 2) {
+                    switch(args[0]) {
+                        case "a":
+                            addUser(args[1]);
+                        case "r":
+                            removeUser(args[1]);
+                        case "s":
+                            setCentral(args[1]);
+                    }
+                }else if(args.length == 3) {
+                    switch(args[0]) {
+                        case "a":
+                            addFriends(args[1],args[2]);
+                        case "r":
+                            removeFriends(args[1],args[2]);
+                    }
+                }else {
+                    // TODO exception
+                }
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } 
     }
 
+   
+    
     @Override
     public void saveToFile(File file) throws IOException {
         try {
