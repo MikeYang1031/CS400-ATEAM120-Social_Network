@@ -13,10 +13,10 @@ import java.util.Set;
  *
  */
 public class SocialNetwork implements SocialNetworkADT {
-    
-    
+
+
     private Graph graph;
-    
+
     // constructor
     public SocialNetwork() {
 
@@ -29,37 +29,41 @@ public class SocialNetwork implements SocialNetworkADT {
 
     @Override
     public boolean addFriends(String person1, String person2) {
-        
+
         graph.addEdge(person1, person2);
-        
+        recordOperations.add("a" + person1 + person2);
+
         return true;
     }
 
-    
+
     @Override
     public boolean removeFriends(String person1, String person2) {
-     
-      if(!graph.getAdjacentVerticesOf(person1).contains(person2)) {
-        return false;
-    }
-      graph.removeEdge(person1, person2); 
+
+        if (!graph.getAdjacentVerticesOf(person1).contains(person2)) {
+            return false;
+        }
+        graph.removeEdge(person1, person2);
+        recordOperations.add("r" + person1 + person2);
         return true;
     }
 
     @Override
     public boolean addUser(String person) {
-       
         graph.addVertex(person);
-        
-        return false;
+        recordOperations.add("a " + person);
+        return true;
     }
 
     @Override
     public boolean removeUser(String person) {
-        
+
+        if (!graph.getAllVertices().contains(person)) {
+            return false;
+        }
         graph.removeVertex(person);
-        
-        return false;
+        recordOperations.add("r " + person);
+        return true;
     }
 
     @Override
@@ -71,7 +75,7 @@ public class SocialNetwork implements SocialNetworkADT {
 
     @Override
     public Set<Person> getMutualFriends(String person1, String person2) {
-        
+
         // TODO Auto-generated method stub
         return null;
     }
