@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -30,6 +31,7 @@ public class Main extends Application {
 	private static final int WINDOW_HEIGHT = 600;
 	private static final String APP_TITLE = "Social Network";
 	Button buttonClose;
+	static SocialNetwork network;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -100,6 +102,13 @@ public class Main extends Application {
 				Button button1 = new Button("Set central user");
 				TextField t1 = new TextField();
 				t1.setMaxWidth(200);
+				button1.setOnAction(new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent event) {
+						if ((t1.getText() != null && !t1.getText().isEmpty())) {
+							network.removeUser(t1.getText());
+						}
+					}
+				});
 				Button button2 = new Button("User1");
 				Button button3 = new Button("User2");
 				button3.setTranslateX(100);
@@ -147,6 +156,15 @@ public class Main extends Application {
 		exp.setTranslateX(0);
 		exp.setStyle("-fx-background-color: #FFC000; "
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+		exp.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				File file = new File(ex.getText());
+				if (file.exists()) {
+					network.saveToFile(file);
+					System.out.println("saved");
+				}
+			}
+		});
 
 		Button load = new Button("Load File");
 		load.setMinSize(100, 30);
@@ -154,7 +172,16 @@ public class Main extends Application {
 		load.setTranslateX(0);
 		load.setStyle("-fx-background-color: #FFC000; "
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-
+		load.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				File file = new File(ex.getText());
+				if (file.exists()) {
+					network.loadFromFile(file);
+					System.out.println("loaded");
+				}
+			}
+		});
+		
 		// Vbox2
 		vb2.setSpacing(10);
 		vb2.setPadding(new Insets(0, 70, 0, 0));
@@ -225,14 +252,14 @@ public class Main extends Application {
 				r.setPrefHeight(10);
 				r.setPrefWidth(200);
 		// Textfield 1 for user
-		TextField t1 = new TextField();
-		t1.setPrefHeight(40);
+		TextField username = new TextField();
+		username.setPrefHeight(40);
 		// t1.setMaxHeight(40);
-		t1.setPrefWidth(200);
-		t1.setPrefColumnCount(10);
-		t1.setPadding(new Insets(0, 0, 0, 0));
+		username.setPrefWidth(200);
+		username.setPrefColumnCount(10);
+		username.setPadding(new Insets(0, 0, 0, 0));
 		VBox vt1 = new VBox();
-		vt1.getChildren().addAll(user, t1);
+		vt1.getChildren().addAll(user, username);
 
 		// HBox containing all buttons about user
 		HBox userButtons = new HBox();
@@ -240,9 +267,27 @@ public class Main extends Application {
 		Button addUser = new Button("Add User");
 		addUser.setStyle("-fx-background-color: #FFC000; "
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+		addUser.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				String name = username.getText();
+				if (name != null && !name.isEmpty()) {
+					network.addUser(name);
+					System.out.println("added a user "+name);
+				}
+			}
+		});
 		Button removeUser = new Button("Remove User");
 		removeUser.setStyle("-fx-background-color: #FFC000; "
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+		removeUser.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				String name = username.getText();
+				if (name != null && !name.isEmpty()) {
+					network.removeUser(name);
+					System.out.println("removed a user "+name);
+				}
+			}
+		});
 		userButtons.getChildren().addAll(addUser, removeUser);
 		userButtons.setAlignment(Pos.CENTER_RIGHT);
 
@@ -252,17 +297,17 @@ public class Main extends Application {
 		r3.setPrefWidth(200);
 
 		// Textfield 2
-		TextField t2 = new TextField();
-		t2.setPrefHeight(40);
-		t2.setPrefWidth(150);
-		t2.setPrefColumnCount(10);
-		t2.setPadding(new Insets(0, 0, 0, 0));
+		TextField friend1 = new TextField();
+		friend1.setPrefHeight(40);
+		friend1.setPrefWidth(150);
+		friend1.setPrefColumnCount(10);
+		friend1.setPadding(new Insets(0, 0, 0, 0));
 //		Label user1 = new Label("user1: ");
 //		HBox u1 = new HBox();
 //		u1.getChildren().addAll(user1, t2);
 		Label rela = new Label("Relationship: ");
 		VBox vt2 = new VBox();
-		vt2.getChildren().addAll(rela, t2);
+		vt2.getChildren().addAll(rela, friend1);
 
 		// HBox for friendship
 		HBox friendship = new HBox();
@@ -281,27 +326,49 @@ public class Main extends Application {
 		Button removeFriendship = new Button("Remove Friendship");
 		removeFriendship.setStyle("-fx-background-color: #FFC000; "
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-
+		
 		friendshipButtons.getChildren().addAll(addFriendship, removeFriendship);
 		friendshipButtons.setAlignment(Pos.CENTER_LEFT);
 		friendship.getChildren().addAll(imageView2, friendshipButtons);
 		friendship.setAlignment(Pos.CENTER);
 
 		// Textfield 3
-		TextField t3 = new TextField();
-		t3.setPrefHeight(40);
-		t3.setPrefWidth(150);
-		t3.setPrefColumnCount(10);
-		t3.setPadding(new Insets(0, 0, 0, 0));
-		String friend2 = t3.getText();
+		TextField friend2 = new TextField();
+		friend2.setPrefHeight(40);
+		friend2.setPrefWidth(150);
+		friend2.setPrefColumnCount(10);
+		friend2.setPadding(new Insets(0, 0, 0, 0));
 		// Remove All Button
 		Button removeAll = new Button("Remove All");
 		removeAll.setStyle("-fx-background-color: #FFC000; "
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+		
+		addFriendship.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				String f1 = friend1.getText();
+				String f2 = friend2.getText();
+				if (f1 != null && !f1.isEmpty() 
+						&& f2 != null && !f2.isEmpty()) {
+					network.addFriends(f1,f2);
+					System.out.println("added a friendship between "+f1+" and "+f2);
+				}
+			}
+		});
+		removeFriendship.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				String f1 = friend1.getText();
+				String f2 = friend2.getText();
+				if (f1 != null && !f1.isEmpty() 
+						&& f2 != null && !f2.isEmpty()) {
+					network.removeFriends(f1,f2);
+					System.out.println("removed a friendship between "+f1+" and "+f2);
+				}
+			}
+		});
 		// Vbox
 		vb.setSpacing(5);
 		vb.setPadding(new Insets(0, 0, 0, 50));
-		vb.getChildren().addAll(r,vt1, userButtons, r3, vt2, friendship, t3, removeAll);
+		vb.getChildren().addAll(r,vt1, userButtons, r3, vt2, friendship, friend2, removeAll);
 		vb.setAlignment(Pos.CENTER);
 		
 		//bigger left VBox
@@ -316,6 +383,7 @@ public class Main extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+    		network = new SocialNetwork();
 		launch(args);
 	}
 }
