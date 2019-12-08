@@ -21,9 +21,10 @@ public interface SocialNetworkADT {
     
     public Set<Graph> getConnectedComponents();
     
+    public boolean setCentral(String person);
+    
     public void loadFromFile(File file);
     
     public void saveToFile(File file);
 
 }
-
