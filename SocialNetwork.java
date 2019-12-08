@@ -1,43 +1,77 @@
 package application;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+
+/**
+ * @author ateam120
+ *
+ */
 public class SocialNetwork implements SocialNetworkADT {
+    
+    
+    private Graph graph;
+    
+    // constructor
+    public SocialNetwork() {
+
+        graph = new Graph();
+        recordOperations = new ArrayList<String>();
+
+    }
+
+    private ArrayList<String> recordOperations;
 
     @Override
     public boolean addFriends(String person1, String person2) {
-        // TODO Auto-generated method stub
-        return false;
+        
+        graph.addEdge(person1, person2);
+        
+        return true;
     }
 
+    
     @Override
     public boolean removeFriends(String person1, String person2) {
-        // TODO Auto-generated method stub
+     
+      if(!graph.getAdjacentVerticesOf(person1).contains(person2)) {
         return false;
+    }
+      graph.removeEdge(person1, person2); 
+        return true;
     }
 
     @Override
     public boolean addUser(String person) {
-        // TODO Auto-generated method stub
+       
+        graph.addVertex(person);
+        
         return false;
     }
 
     @Override
     public boolean removeUser(String person) {
-        // TODO Auto-generated method stub
+        
+        graph.removeVertex(person);
+        
         return false;
     }
 
     @Override
-    public Set<Person> getFriends(String person) {
+    public List<String> getFriends(String person) {
+        List<String> friend = graph.getAdjacentVerticesOf(person);
         // TODO Auto-generated method stub
-        return null;
+        return friend;
     }
 
     @Override
     public Set<Person> getMutualFriends(String person1, String person2) {
+        
         // TODO Auto-generated method stub
         return null;
     }
@@ -57,13 +91,24 @@ public class SocialNetwork implements SocialNetworkADT {
     @Override
     public void loadFromFile(File file) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
-    public void saveToFile(File file) {
-        // TODO Auto-generated method stub
-        
+    public void saveToFile(File file) throws IOException {
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            for (int i = 0; i < recordOperations.size(); i++) {
+                String log = recordOperations.get(i);
+                fileWriter.write(log);
+                fileWriter.write("\n");
+            }
+        }
+
+        catch (Exception e) {
+            System.out.println("Caution: IOException!");
+        }
+
     }
 
 }
