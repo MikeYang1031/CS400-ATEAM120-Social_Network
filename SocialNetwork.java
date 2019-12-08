@@ -34,7 +34,7 @@ public class SocialNetwork implements SocialNetworkADT {
     public boolean addFriends(String person1, String person2) {
 
         graph.addEdge(person1, person2);
-        recordOperations.add("a" + person1 + person2);
+        recordOperations.add("a " + person1+ " " + person2);
 
         return true;
     }
@@ -47,7 +47,7 @@ public class SocialNetwork implements SocialNetworkADT {
             return false;
         }
         graph.removeEdge(person1, person2);
-        recordOperations.add("r" + person1 + person2);
+        recordOperations.add("r " + person1+ " " + person2);
         return true;
     }
 
