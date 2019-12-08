@@ -162,14 +162,17 @@ public class SocialNetwork implements SocialNetworkADT {
    
     
     @Override
-    public void saveToFile(File file) throws IOException {
+    public void saveToFile(File file) {
         try {
             FileWriter fileWriter = new FileWriter(file);
+            System.out.println(recordOperations.size());
             for (int i = 0; i < recordOperations.size(); i++) {
                 String log = recordOperations.get(i);
+            	System.out.println(log);
                 fileWriter.write(log);
                 fileWriter.write("\n");
             }
+            fileWriter.close();
         }
 
         catch (Exception e) {
