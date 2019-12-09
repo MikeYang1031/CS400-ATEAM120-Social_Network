@@ -151,6 +151,7 @@ public class SocialNetwork implements SocialNetworkADT {
 					}
 				}else {
 					// TODO exception
+					System.out.println("This is not a valid command: " + line);
 				}
 			}
 			scanner.close();
