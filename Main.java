@@ -105,7 +105,7 @@ public class Main extends Application {
 				button1.setOnAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent event) {
 						if ((t1.getText() != null && !t1.getText().isEmpty())) {
-							network.removeUser(t1.getText());
+							network.setCentral(t1.getText());
 						}
 					}
 				});
