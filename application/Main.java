@@ -31,7 +31,7 @@ public class Main extends Application {
 	private static final int WINDOW_HEIGHT = 600;
 	private static final String APP_TITLE = "Social Network";
 	Button buttonClose;
-	static SocialNetwork network;
+	private SocialNetwork network = new SocialNetwork();
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -386,7 +386,6 @@ public class Main extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-    		network = new SocialNetwork();
 		launch(args);
 	}
 }
