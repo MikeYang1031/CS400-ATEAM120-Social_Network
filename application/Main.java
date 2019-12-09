@@ -106,6 +106,7 @@ public class Main extends Application {
 					public void handle(ActionEvent event) {
 						if ((t1.getText() != null && !t1.getText().isEmpty())) {
 							network.setCentral(t1.getText());
+							System.out.println("Set central: "+t1.getText());
 						}
 					}
 				});
@@ -174,10 +175,12 @@ public class Main extends Application {
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
 		load.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				File file = new File(ex.getText());
+				File file = new File(ld.getText());
 				if (file.exists()) {
 					network.loadFromFile(file);
 					System.out.println("loaded");
+				}else {
+					System.out.println("File doesn't exist: " + ld.getText());
 				}
 			}
 		});
@@ -386,4 +389,4 @@ public class Main extends Application {
     		network = new SocialNetwork();
 		launch(args);
 	}
-  }
+}
