@@ -236,35 +236,41 @@ public class SocialNetwork implements SocialNetworkADT {
 
     @Override
     public void loadFromFile(File file) {
-        try {
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] args = line.split(" ");
-                if (args.length == 2) {
-                    switch (args[0]) {
-                        case "a":
-                            addUser(args[1]);
-                        case "r":
-                            removeUser(args[1]);
-                        case "s":
-                            setCentral(args[1]);
-                    }
-                } else if (args.length == 3) {
-                    switch (args[0]) {
-                        case "a":
-                            addFriends(args[1], args[2]);
-                        case "r":
-                            removeFriends(args[1], args[2]);
-                    }
-                } else {
-                    // TODO exception
-                }
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    	try {
+			Scanner scanner = new Scanner(file);
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				String[] args = line.split(" ");
+				if(args.length == 2) {
+					switch(args[0]) {
+						case "a":
+							addUser(args[1]);
+							break;
+						case "r":
+							removeUser(args[1]);
+							break;
+						case "s":
+							setCentral(args[1]);
+							break;
+					}
+				}else if(args.length == 3) {
+					switch(args[0]) {
+						case "a":
+							addFriends(args[1],args[2]);
+							break;
+						case "r":
+							removeFriends(args[1],args[2]);
+							break;
+					}
+				}else {
+					// TODO exception
+					System.out.println("This is not a valid command: " + line);
+				}
+			}
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} 
     }
 
 
