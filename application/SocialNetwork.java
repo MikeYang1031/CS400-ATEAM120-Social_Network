@@ -246,21 +246,26 @@ public class SocialNetwork implements SocialNetworkADT {
 					switch(args[0]) {
 						case "a":
 							addUser(args[1]);
+							System.out.println("added a user "+args[1]);
 							break;
 						case "r":
 							removeUser(args[1]);
+							System.out.println("removed a user "+args[1]);
 							break;
 						case "s":
 							setCentral(args[1]);
+							System.out.println("Set central: "+args[1]);
 							break;
 					}
 				}else if(args.length == 3) {
 					switch(args[0]) {
 						case "a":
 							addFriends(args[1],args[2]);
+							System.out.println("added a friendship between "+args[1]+" and "+args[2]);
 							break;
 						case "r":
 							removeFriends(args[1],args[2]);
+							System.out.println("added a friendship between "+args[1]+" and "+args[2]);
 							break;
 					}
 				}else {
