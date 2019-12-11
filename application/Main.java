@@ -30,7 +30,7 @@ public class Main extends Application {
 	private List<String> args;
 
 	private static final int WINDOW_WIDTH = 800;
-	private static final int WINDOW_HEIGHT = 600;
+	private static final int WINDOW_HEIGHT = 800;
 	private static final String APP_TITLE = "Social Network";
 	
 	private SocialNetwork network = new SocialNetwork();
@@ -218,10 +218,18 @@ public class Main extends Application {
 					}
 				}
 			});
+			Button mutual = new Button("List Mutual Friends");
+			
+			mutual.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");;
+			TextField user1 = new TextField();
+			TextField user2 = new TextField();
+			user1.setMaxWidth(100);
+			user2.setMaxWidth(100);
 			// Vbox
-			vb.setSpacing(5);
+			vb.setSpacing(20);
 			vb.setPadding(new Insets(0, 0, 0, 50));
-			vb.getChildren().addAll(r,vt1, userButtons, r3, vt2, friendship, friend2, removeAll);
+			vb.getChildren().addAll(r,vt1, userButtons, r3, vt2, friendship, friend2, removeAll, user1, user2, mutual);
 			vb.setAlignment(Pos.CENTER);
 			
 			//bigger left VBox
@@ -361,11 +369,19 @@ public class Main extends Application {
 				}
 			}
 		});
+		Button shortestPath = new Button("Show Shortest Path");
+		
+		shortestPath.setStyle("-fx-background-color: #FFC000; "
+				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");;
+		TextField user1 = new TextField();
+		TextField user2 = new TextField();
+		user1.setMaxWidth(100);
+		user2.setMaxWidth(100);
 		
 		// Vbox2
-		vb2.setSpacing(10);
+		vb2.setSpacing(20);
 		vb2.setPadding(new Insets(0, 70, 0, 0));
-		vb2.getChildren().addAll(ld, load, ex, exp, r2, dis);
+		vb2.getChildren().addAll(ld, load, ex, exp, r2, user1, user2, shortestPath, dis);
 		vb2.setTranslateY(25);
 		vb2.setAlignment(Pos.CENTER);
 
@@ -376,7 +392,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		setBackgroundColor();
 		// set feedback
-		setUpBottomBox();
+		//setUpBottomBox();
 		setUpTopBox();
 		setUpLeftBox();
 		setUpRightBox(primaryStage);
