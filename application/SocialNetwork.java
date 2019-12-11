@@ -19,7 +19,7 @@ import java.util.Set;
  *
  */
 public class SocialNetwork implements SocialNetworkADT {
-
+ ArrayList<String> users = new  ArrayList<String>();
     private Graph graph;
     private List<String> tempStore;
     private Queue<Person> queue;
@@ -37,7 +37,12 @@ public class SocialNetwork implements SocialNetworkADT {
 
     @Override
     public boolean addFriends(String person1, String person2) {
-
+ if(!users.contains(person1)) {
+        	addUser(person1);
+        }
+        if(!users.contains(person2)) {
+        	addUser(person2);
+        }
         Person Person1 = new Person(person1);
         Person Person2 = new Person(person2);
 
@@ -64,9 +69,12 @@ public class SocialNetwork implements SocialNetworkADT {
 
     @Override
     public boolean addUser(String person) {
-
+  if(users.contains(person)) {
+        	System.out.println("not add");
+        	return false;
+        }
         Person Person = new Person(person);
-
+users.add(person);
         graph.addVertex(Person);
         recordOperations.add("a " + person);
         return true;
