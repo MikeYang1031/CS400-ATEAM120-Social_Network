@@ -30,7 +30,8 @@ public interface SocialNetworkADT {
     public void loadFromFile(File file);
     //
     public void saveToFile(File file) throws IOException;
-    boolean setCentral(String person);
-
+    // changed the parameter type to Person 
+    public void setCentral(Person centralUser);
+    // newly added method 
+    public Person getCentralUser();
 }
-
