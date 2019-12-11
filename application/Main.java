@@ -122,7 +122,6 @@ public class Main extends Application {
             r.setPrefWidth(200);
             //info TextField
             Text info = new Text();
-            info.setText(network.updateInfo());
             // Textfield 1 for user
             TextField username = new TextField();
             username.setPrefHeight(40);
@@ -255,6 +254,16 @@ public class Main extends Application {
                     info.setText(network.updateInfo());
                 }
             });
+            removeAll.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					network.removeAll();
+					infoMessage("Remove all the information!");
+					info.setText(network.updateInfo());
+					
+				}
+            	
+            });
+            
             TextField user1 = new TextField();
             TextField user2 = new TextField();
             user1.setMaxWidth(100);
