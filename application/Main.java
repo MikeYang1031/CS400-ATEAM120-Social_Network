@@ -66,19 +66,12 @@ public class Main extends Application {
 	
 	private void setUpTopBox() {
 		// set top menu
-		Button button1 = new Button("Save And Quit");
-		Button button2 = new Button("Quit Without Save");
-
-		button1.setStyle("-fx-background-color: #FFC000; "
+		Button dis = new Button("Display");
+		dis.setMinSize(200, 40);
+		dis.setTranslateX(520);
+		dis.setStyle("-fx-background-color: #FFC000; "
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		button2.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-
-		button1.setTranslateX(595);
-		button2.setTranslateX(595);
-
-		HBox hbox = new HBox(button1, button2);
-		border.setTop(hbox);
+		border.setTop(dis);
 	}
 	private void infoMessage(String message) {
 		Alert info = new Alert(AlertType.INFORMATION);
@@ -361,8 +354,8 @@ public class Main extends Application {
 			centralUser.setMaxWidth(100);
 			// Vbox2
 			vb2.setSpacing(20);
-			vb2.setPadding(new Insets(0, 40, 0, 0));
-			vb2.getChildren().addAll(ld, load, ex, exp, r2, user1, user2, shortestPath, centralUser, central, dis);
+			vb2.setPadding(new Insets(190, 40, 0, 0));
+			vb2.getChildren().addAll(ld, load, ex, exp, r2, user1, user2, shortestPath, centralUser, central);
 			vb2.setTranslateY(25);
 			vb2.setAlignment(Pos.CENTER);
 	
@@ -379,7 +372,7 @@ public class Main extends Application {
 		setBackgroundColor();
 		setUpLeftBox();
 		setUpRightBox(primaryStage);
-
+		setUpTopBox();
 		// Add the vertical box to the center of the root pane
 		// root.setCenter(vbox);
 		Scene mainScene = new Scene(border, WINDOW_WIDTH, WINDOW_HEIGHT);
