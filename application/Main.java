@@ -10,6 +10,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -46,20 +48,14 @@ public class Main extends Application {
 		Label feedLabel = new Label("Feedback");
 		TextField feedText = new TextField();
 
-
 		feedLabel.setStyle("-fx-background-color: #FFC000");
 		feedLabel.setPrefSize(60, 25);
-		feedText.setPrefWidth(650);
+		feedText.setPrefWidth(750);
 		feedback.setSpacing(10);
 		feedback.getChildren().addAll(feedLabel, feedText);
 		border.setBottom(feedback);
 	}
-	private void alertMessage(String message) {
-		Alert info = new Alert(AlertType.INFORMATION);
-		info.setTitle("ERROR");
-		info.setContentText(message);
-		info.showAndWait();
-	}
+	
 	private void setUpTopBox() {
 		// set top menu
 		Button button1 = new Button("Save And Quit");
@@ -76,13 +72,168 @@ public class Main extends Application {
 		HBox hbox = new HBox(button1, button2);
 		border.setTop(hbox);
 	}
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		setBackgroundColor();
-		// set feedback
-		setUpBottomBox();
-		setUpTopBox();
-		
+	private void alertMessage(String message) {
+		Alert info = new Alert(AlertType.INFORMATION);
+		info.setTitle("ERROR");
+		info.setContentText(message);
+		info.showAndWait();
+	}
+	
+	private void setUpLeftBox() {
+		try {
+			VBox left = new VBox();
+			VBox vb = new VBox();
+	
+	
+			FileInputStream inputImage = null;
+	
+			inputImage = new FileInputStream("ATEAM.png");
+	
+			Image image = new Image(inputImage);
+			ImageView imageView = new ImageView(image);
+	
+			imageView.setFitHeight(120);
+			imageView.setFitWidth(400);
+			Label user = new Label("User: ");
+			
+			// Empty space
+			Region r = new Region();
+			r.setPrefHeight(10);
+			r.setPrefWidth(200);
+			// Textfield 1 for user
+			TextField username = new TextField();
+			username.setPrefHeight(40);
+			// t1.setMaxHeight(40);
+			username.setPrefWidth(200);
+			username.setPrefColumnCount(10);
+			username.setPadding(new Insets(0, 0, 0, 0));
+			VBox vt1 = new VBox();
+			vt1.getChildren().addAll(user, username);
+	
+			// HBox containing all buttons about user
+			HBox userButtons = new HBox();
+			userButtons.setSpacing(5);
+			Button addUser = new Button("Add User");
+			addUser.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+			addUser.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					String name = username.getText();
+					if (name != null && !name.isEmpty()) {
+						network.addUser(name);
+						System.out.println("added a user "+name);
+					}
+				}
+			});
+			Button removeUser = new Button("Remove User");
+			removeUser.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+			removeUser.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					String name = username.getText();
+					if (name != null && !name.isEmpty()) {
+						network.removeUser(name);
+						System.out.println("removed a user "+name);
+					}
+				}
+			});
+			userButtons.getChildren().addAll(addUser, removeUser);
+			userButtons.setAlignment(Pos.CENTER_RIGHT);
+	
+			// Empty space
+			Region r3 = new Region();
+			r3.setPrefHeight(30);
+			r3.setPrefWidth(200);
+	
+			// Textfield 2
+			TextField friend1 = new TextField();
+			friend1.setPrefHeight(40);
+			friend1.setPrefWidth(150);
+			friend1.setPrefColumnCount(10);
+			friend1.setPadding(new Insets(0, 0, 0, 0));
+	//		Label user1 = new Label("user1: ");
+	//		HBox u1 = new HBox();
+	//		u1.getChildren().addAll(user1, t2);
+			Label rela = new Label("Relationship: ");
+			VBox vt2 = new VBox();
+			vt2.getChildren().addAll(rela, friend1);
+	
+			// HBox for friendship
+			HBox friendship = new HBox();
+			friendship.setSpacing(5);
+			FileInputStream input;
+			input = new FileInputStream("FriendshipArrow.png");
+			Image image2 = new Image(input); // ImageView of an arrow of friendship
+			ImageView imageView2 = new ImageView(image2);
+			imageView2.setFitHeight(70);
+			imageView2.setFitWidth(50);
+			VBox friendshipButtons = new VBox(); // Vbox to contain all button about friendship
+			friendshipButtons.setSpacing(5);
+	
+			Button addFriendship = new Button("Add Friendship");
+			addFriendship.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+			Button removeFriendship = new Button("Remove Friendship");
+			removeFriendship.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+			
+			friendshipButtons.getChildren().addAll(addFriendship, removeFriendship);
+			friendshipButtons.setAlignment(Pos.CENTER_LEFT);
+			friendship.getChildren().addAll(imageView2, friendshipButtons);
+			friendship.setAlignment(Pos.CENTER);
+	
+			// Textfield 3
+			TextField friend2 = new TextField();
+			friend2.setPrefHeight(40);
+			friend2.setPrefWidth(150);
+			friend2.setPrefColumnCount(10);
+			friend2.setPadding(new Insets(0, 0, 0, 0));
+			// Remove All Button
+			Button removeAll = new Button("Remove All");
+			removeAll.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+			
+			addFriendship.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					String f1 = friend1.getText();
+					String f2 = friend2.getText();
+					if (f1 != null && !f1.isEmpty() 
+							&& f2 != null && !f2.isEmpty()) {
+						network.addFriends(f1,f2);
+						System.out.println("added a friendship between "+f1+" and "+f2);
+					}
+				}
+			});
+			removeFriendship.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					String f1 = friend1.getText();
+					String f2 = friend2.getText();
+					if (f1 != null && !f1.isEmpty() 
+							&& f2 != null && !f2.isEmpty()) {
+						network.removeFriends(f1,f2);
+						System.out.println("removed a friendship between "+f1+" and "+f2);
+					}
+				}
+			});
+			// Vbox
+			vb.setSpacing(5);
+			vb.setPadding(new Insets(0, 0, 0, 50));
+			vb.getChildren().addAll(r,vt1, userButtons, r3, vt2, friendship, friend2, removeAll);
+			vb.setAlignment(Pos.CENTER);
+			
+			//bigger left VBox
+			left.setSpacing(5);
+			left.getChildren().addAll(imageView, vb);
+			left.setAlignment(Pos.TOP_CENTER);
+	
+			border.setLeft(left);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void setUpRightBox(Stage primaryStage) {
 		VBox vb2 = new VBox();
 
 		// Textfield 1 for user
@@ -216,6 +367,16 @@ public class Main extends Application {
 		vb2.setAlignment(Pos.CENTER);
 
 		border.setRight(vb2);
+	}
+	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		setBackgroundColor();
+		// set feedback
+		setUpBottomBox();
+		setUpTopBox();
+		setUpLeftBox();
+		setUpRightBox(primaryStage);
 
 		// Add the vertical box to the center of the root pane
 		// root.setCenter(vbox);
@@ -225,156 +386,6 @@ public class Main extends Application {
 		primaryStage.setTitle(APP_TITLE);
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
-
-		VBox left = new VBox();
-		VBox vb = new VBox();
-
-
-		FileInputStream inputImage = null;
-
-		try {
-			inputImage = new FileInputStream("ATEAM.png");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		Image image = new Image(inputImage);
-		ImageView imageView = new ImageView(image);
-
-		imageView.setFitHeight(120);
-		imageView.setFitWidth(400);
-		Label user = new Label("User: ");
-		
-		// Empty space
-				Region r = new Region();
-				r.setPrefHeight(10);
-				r.setPrefWidth(200);
-		// Textfield 1 for user
-		TextField username = new TextField();
-		username.setPrefHeight(40);
-		// t1.setMaxHeight(40);
-		username.setPrefWidth(200);
-		username.setPrefColumnCount(10);
-		username.setPadding(new Insets(0, 0, 0, 0));
-		VBox vt1 = new VBox();
-		vt1.getChildren().addAll(user, username);
-
-		// HBox containing all buttons about user
-		HBox userButtons = new HBox();
-		userButtons.setSpacing(5);
-		Button addUser = new Button("Add User");
-		addUser.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		addUser.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				String name = username.getText();
-				if (name != null && !name.isEmpty()) {
-					network.addUser(name);
-					System.out.println("added a user "+name);
-				}
-			}
-		});
-		Button removeUser = new Button("Remove User");
-		removeUser.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		removeUser.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				String name = username.getText();
-				if (name != null && !name.isEmpty()) {
-					network.removeUser(name);
-					System.out.println("removed a user "+name);
-				}
-			}
-		});
-		userButtons.getChildren().addAll(addUser, removeUser);
-		userButtons.setAlignment(Pos.CENTER_RIGHT);
-
-		// Empty space
-		Region r3 = new Region();
-		r3.setPrefHeight(30);
-		r3.setPrefWidth(200);
-
-		// Textfield 2
-		TextField friend1 = new TextField();
-		friend1.setPrefHeight(40);
-		friend1.setPrefWidth(150);
-		friend1.setPrefColumnCount(10);
-		friend1.setPadding(new Insets(0, 0, 0, 0));
-//		Label user1 = new Label("user1: ");
-//		HBox u1 = new HBox();
-//		u1.getChildren().addAll(user1, t2);
-		Label rela = new Label("Relationship: ");
-		VBox vt2 = new VBox();
-		vt2.getChildren().addAll(rela, friend1);
-
-		// HBox for friendship
-		HBox friendship = new HBox();
-		friendship.setSpacing(5);
-		FileInputStream input = new FileInputStream("FriendshipArrow.png");
-		Image image2 = new Image(input); // ImageView of an arrow of friendship
-		ImageView imageView2 = new ImageView(image2);
-		imageView2.setFitHeight(70);
-		imageView2.setFitWidth(50);
-		VBox friendshipButtons = new VBox(); // Vbox to contain all button about friendship
-		friendshipButtons.setSpacing(5);
-
-		Button addFriendship = new Button("Add Friendship");
-		addFriendship.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		Button removeFriendship = new Button("Remove Friendship");
-		removeFriendship.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		
-		friendshipButtons.getChildren().addAll(addFriendship, removeFriendship);
-		friendshipButtons.setAlignment(Pos.CENTER_LEFT);
-		friendship.getChildren().addAll(imageView2, friendshipButtons);
-		friendship.setAlignment(Pos.CENTER);
-
-		// Textfield 3
-		TextField friend2 = new TextField();
-		friend2.setPrefHeight(40);
-		friend2.setPrefWidth(150);
-		friend2.setPrefColumnCount(10);
-		friend2.setPadding(new Insets(0, 0, 0, 0));
-		// Remove All Button
-		Button removeAll = new Button("Remove All");
-		removeAll.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		
-		addFriendship.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				String f1 = friend1.getText();
-				String f2 = friend2.getText();
-				if (f1 != null && !f1.isEmpty() 
-						&& f2 != null && !f2.isEmpty()) {
-					network.addFriends(f1,f2);
-					System.out.println("added a friendship between "+f1+" and "+f2);
-				}
-			}
-		});
-		removeFriendship.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				String f1 = friend1.getText();
-				String f2 = friend2.getText();
-				if (f1 != null && !f1.isEmpty() 
-						&& f2 != null && !f2.isEmpty()) {
-					network.removeFriends(f1,f2);
-					System.out.println("removed a friendship between "+f1+" and "+f2);
-				}
-			}
-		});
-		// Vbox
-		vb.setSpacing(5);
-		vb.setPadding(new Insets(0, 0, 0, 50));
-		vb.getChildren().addAll(r,vt1, userButtons, r3, vt2, friendship, friend2, removeAll);
-		vb.setAlignment(Pos.CENTER);
-		
-		//bigger left VBox
-		left.setSpacing(5);
-		left.getChildren().addAll(imageView, vb);
-		left.setAlignment(Pos.TOP_CENTER);
-
-		border.setLeft(left);
 	}
 
 	/**
