@@ -87,6 +87,14 @@ public class Main extends Application {
         info.showAndWait();
     }
 
+    private void infoMessage(String title,String header, String message) {
+        Alert info = new Alert(AlertType.INFORMATION);
+        info.setTitle(title);
+        info.setHeaderText(header);
+        info.setContentText(message);
+        info.showAndWait();
+    }
+    
     private void setUpLeftBox() {
 
         try {
@@ -112,6 +120,8 @@ public class Main extends Application {
             Region r = new Region();
             r.setPrefHeight(10);
             r.setPrefWidth(200);
+            //info TextField
+            Text info = new Text();
             // Textfield 1 for user
             TextField username = new TextField();
             username.setPrefHeight(40);
@@ -140,6 +150,7 @@ public class Main extends Application {
                     } else {
                         infoMessage("not working");
                     }
+                    info.setText(network.updateInfo());
                 }
             });
             Button removeUser = new Button("Remove User");
@@ -227,6 +238,7 @@ public class Main extends Application {
                         infoMessage(
                             "added a friendship between " + f1 + " and " + f2);
                     }
+                    info.setText(network.updateInfo());
                 }
             });
             removeFriendship.setOnAction(new EventHandler<ActionEvent>() {
@@ -239,6 +251,7 @@ public class Main extends Application {
                         infoMessage("removed a friendship between " + f1
                             + " and " + f2);
                     }
+                    info.setText(network.updateInfo());
                 }
             });
             TextField user1 = new TextField();
@@ -252,16 +265,11 @@ public class Main extends Application {
                 + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
             mutual.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
-                    String mf1 = user1.getText();
-                    String mf2 = user2.getText();
+                    String f1 = user1.getText();
+                    String f2 = user2.getText();
                     Set<String> mFriend = new HashSet<String>();
-                    mFriend = network.getMutualFriends(mf1, mf2);
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Mutual Friends");
-                    alert.setHeaderText("Mutual Friends:");
-                    String s = mFriend.toString();
-                    alert.setContentText(s);
-                    alert.show();
+                    mFriend = network.getMutualFriends(f1, f2);
+                    infoMessage("Mutual Friends","Mutual Friends:",mFriend.toString());
                 }
             });
             // Vbox
@@ -273,7 +281,7 @@ public class Main extends Application {
 
             // bigger left VBox
             left.setSpacing(5);
-            left.getChildren().addAll(imageView, vb);
+            left.getChildren().addAll(imageView,info, vb);
             left.setAlignment(Pos.TOP_CENTER);
 
             border.setLeft(left);
@@ -360,6 +368,16 @@ public class Main extends Application {
             TextField user2 = new TextField();
             user1.setMaxWidth(100);
             user2.setMaxWidth(100);
+            shortestPath.setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent event) {
+                    String f1 = user1.getText();
+                    String f2 = user2.getText();
+                    List<String> path = new ArrayList<String>();
+                    path = network.getShortestPath(f1, f2);
+                    String header = "Shortest Path between "+f1+" and "+f2+":";
+                    infoMessage("Shortest Path",header,path.toString());
+                }
+            });
 
             Button central = new Button("Set Central User");
             central.setStyle("-fx-background-color: #FFC000; "
