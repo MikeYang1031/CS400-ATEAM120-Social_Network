@@ -364,21 +364,36 @@ public class Main extends Application {
 	@Override
 	public void stop(){
 		//infoMessage("Stage is closing");
-		ButtonType saveButtonType = new ButtonType("Save", ButtonData.OK_DONE);
-		ButtonType ENSButtonType = new ButtonType("Exit without Save", ButtonData.CANCEL_CLOSE);
+		ButtonType saveButtonType = new ButtonType("Save", ButtonData.YES);
+		ButtonType ENSButtonType = new ButtonType("Exit without Save", ButtonData.NO);
 		TextInputDialog td = new TextInputDialog("File name or path");
 		td.setHeaderText("Save the progress?"); 
-		//td.getDialogPane().getButtonTypes().addAll(saveButtonType, ENSButtonType);
+		td.getDialogPane().getButtonTypes().set(0,saveButtonType);
+		td.getDialogPane().getButtonTypes().set(1,ENSButtonType);
+		
+		Button save = (Button) td.getDialogPane().lookupButton(saveButtonType);
+		save.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				// ok was pressed
+				//System.out.print("save pressed");
+				File file = new File(td.getEditor().getText());
+				if (file.exists()) {
+					network.saveToFile(file);
+					infoMessage("Successfully saved, goodbye!");
+					//td.showAndWait();
+				}else {
+					infoMessage("File Doesn't exists, save failed!");
+				}
+			    // Save file
+			}
+		});
+		Button ENS = (Button) td.getDialogPane().lookupButton(ENSButtonType);
+		ENS.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				//System.out.println("cancel might have been pressed");
+			}
+		});
 		td.showAndWait();
-		File file = new File(td.getEditor().getText());
-		if (file.exists()) {
-			network.saveToFile(file);
-			infoMessage("Successfully saved, goodbye!");
-			//td.showAndWait();
-		}else {
-			infoMessage("File Doesn't exists, save failed!");
-		}
-	    // Save file
 	}
 
 	/**
