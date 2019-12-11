@@ -37,6 +37,13 @@ public class SocialNetwork implements SocialNetworkADT {
 //record every operation made by user
 	private ArrayList<String> recordOperations;
 
+	//update the network information
+	public String updateInfo() {
+		String info = "User: "+graph.order()+", Friendship: "+graph.size()
+			+", Connected Components: "+ getConnectedComponents();
+		return info;
+	}
+	
 	@Override
 	public boolean addFriends(String person1, String person2) {
 		if(person1 == null || person2 == null) {
