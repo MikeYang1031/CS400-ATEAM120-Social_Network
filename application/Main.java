@@ -265,29 +265,11 @@ public class Main extends Application {
             	
             });
             
-            TextField user1 = new TextField();
-            TextField user2 = new TextField();
-            user1.setMaxWidth(100);
-            user2.setMaxWidth(100);
-
-            Button mutual = new Button("List Mutual Friends");
-
-            mutual.setStyle("-fx-background-color: #FFC000; "
-                + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-            mutual.setOnAction(new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent event) {
-                    String f1 = user1.getText();
-                    String f2 = user2.getText();
-                    Set<String> mFriend = new HashSet<String>();
-                    mFriend = network.getMutualFriends(f1, f2);
-                    infoMessage("Mutual Friends","Mutual Friends:",mFriend.toString());
-                }
-            });
             // Vbox
             vb.setSpacing(20);
             vb.setPadding(new Insets(0, 0, 0, 50));
             vb.getChildren().addAll(r, vt1, userButtons, r3, vt2, friendship,
-                friend2, removeAll, user1, user2, mutual);
+                friend2, removeAll);
             vb.setAlignment(Pos.CENTER);
 
             // bigger left VBox
@@ -305,7 +287,30 @@ public class Main extends Application {
     private void setUpRightBox(Stage primaryStage) {
         try {
             VBox vb2 = new VBox();
+            
+            HBox muser = new HBox();
+            muser.setSpacing(5);
+            TextField muser1 = new TextField();
+            TextField muser2 = new TextField();
+            //user1.setMaxWidth(100);
+            //user2.setMaxWidth(100);
+            muser.getChildren().addAll(muser1, muser2);
 
+            Button mutual = new Button("List Mutual Friends");
+
+            mutual.setStyle("-fx-background-color: #FFC000; "
+                + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+            mutual.setAlignment(Pos.CENTER_RIGHT);
+            mutual.setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent event) {
+                    String f1 = muser1.getText();
+                    String f2 = muser2.getText();
+                    Set<String> mFriend = new HashSet<String>();
+                    mFriend = network.getMutualFriends(f1, f2);
+                    infoMessage("Mutual Friends","Mutual Friends:",mFriend.toString());
+                }
+            });
+            
             // Textfield 1 for user
             TextField ld = new TextField();
             ld.setPrefHeight(30);
@@ -375,10 +380,14 @@ public class Main extends Application {
 
             shortestPath.setStyle("-fx-background-color: #FFC000; "
                 + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");;
+            shortestPath.setAlignment(Pos.TOP_RIGHT);
+            HBox shortest = new HBox();
+            shortest.setSpacing(5);
             TextField user1 = new TextField();
             TextField user2 = new TextField();
-            user1.setMaxWidth(100);
-            user2.setMaxWidth(100);
+            //user1.setMaxWidth(100);
+            //user2.setMaxWidth(100);
+            shortest.getChildren().addAll(user1, user2);
             shortestPath.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
                     String f1 = user1.getText();
@@ -398,10 +407,10 @@ public class Main extends Application {
             // Vbox2
             vb2.setSpacing(20);
             vb2.setPadding(new Insets(190, 40, 0, 0));
-            vb2.getChildren().addAll(user1, user2,
+            vb2.getChildren().addAll(muser,mutual,shortest,
                 shortestPath, centralUser, central, ld, load, ex, exp, r2);
             vb2.setTranslateY(25);
-            vb2.setAlignment(Pos.CENTER);
+            vb2.setAlignment(Pos.TOP_CENTER);
 
             border.setRight(vb2);
 
