@@ -17,9 +17,9 @@ public class Graph implements GraphADT {
 
     private int vertexNumber; // the vertex number in the graph
     private int edgeNumber;// the edge numebr
-    private HashMap<Person, ArrayList<Person>> adjList; // main body of graph. array to record vertex, hashmap to record
+    private HashMap<String, ArrayList<String>> adjList; // main body of graph. array to record vertex, hashmap to record
                                                         // edge
-    private ArrayList<Person> vertexList;// set the vertex
+    private ArrayList<String> vertexList;// set the vertex
     /*
      * Default no-argument constructor
      */
@@ -27,8 +27,8 @@ public class Graph implements GraphADT {
     public Graph() {
         edgeNumber = 0;// initiate edge number
         vertexNumber = 0;// initiate vertex number
-        adjList = new HashMap<Person, ArrayList<Person>>(vertexNumber);
-        vertexList = new ArrayList<Person>();
+        adjList = new HashMap<String, ArrayList<String>>(vertexNumber);
+        vertexList = new ArrayList<String>();
     }
 
     /**
@@ -40,11 +40,11 @@ public class Graph implements GraphADT {
      * Valid argument conditions: 1. vertex is non-null 2. vertex is not already in
      * the graph
      */
-    public void addVertex(Person person) {
+    public void addVertex(String person) {
         if (person == null || adjList.containsKey(person)) { // vertex is null or aleady in graph
             return;
         } else {
-            ArrayList<Person> edges = new ArrayList<Person>();// the vertex's edges
+            ArrayList<String> edges = new ArrayList<String>();// the vertex's edges
             adjList.put(person, edges); // add the edges list to the vertex
             vertexList.add(person);// add vertex
             vertexNumber++;// vertex number increase
@@ -61,7 +61,7 @@ public class Graph implements GraphADT {
      * Valid argument conditions: 1. vertex is non-null 2. vertex is not already in
      * the graph
      */
-    public void removeVertex(Person person) {
+    public void removeVertex(String person) {
         if (person == null || !adjList.containsKey(person)) { // vertex should be non null and in the graph
             return;
         } else {
@@ -98,7 +98,7 @@ public class Graph implements GraphADT {
      * Valid argument conditions: 1. neither vertex is null 2. both vertices are in
      * the graph 3. the edge is not in the graph
      */
-    public void addEdge(Person person1, Person person2) {
+    public void addEdge(String person1, String person2) {
         if (person1 == null || person2 == null) {// two vertex cannot be null
 
             return;
@@ -129,7 +129,7 @@ public class Graph implements GraphADT {
      * Valid argument conditions: 1. neither vertex is null 2. both vertices are in
      * the graph 3. the edge from vertex1 to vertex2 is in the graph
      */
-    public void removeEdge(Person person1, Person person2) {
+    public void removeEdge(String person1, String person2) {
         if (person1 == null || person2 == null) {
             return;
         } else {
@@ -149,8 +149,8 @@ public class Graph implements GraphADT {
      * Returns a Set that contains all the vertices
      * 
      */
-    public Set<Person> getAllVertices() {
-        Set<Person> set = new HashSet<>();
+    public Set<String> getAllVertices() {
+        Set<String> set = new HashSet<>();
         if (vertexList == null) {// if there is nothing in the graph
             return null;
         } else {
@@ -165,8 +165,8 @@ public class Graph implements GraphADT {
      * Get all the neighbor (adjacent) vertices of a vertex
      *
      */
-    public List<Person> getAdjacentVerticesOf(Person person) {
-        List<Person> list = new ArrayList<Person>();
+    public List<String> getAdjacentVerticesOf(String person) {
+        List<String> list = new ArrayList<String>();
         if (vertexList.contains(person)) {// if vertex is in graph
             for (int i = 0; i < adjList.get(person).size(); i++) {
                 list.add(adjList.get(person).get(i));// get every edge of the vertex
@@ -191,10 +191,8 @@ public class Graph implements GraphADT {
         return vertexNumber;// the total vertice number in the graph
     }
 
-    public List<Person> getVertexList() {
+    public List<String> getVertexList() {
         // TODO Auto-generated method stub
         return vertexList;
     }
-
-
 }
