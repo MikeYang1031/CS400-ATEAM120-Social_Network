@@ -3,7 +3,10 @@ package application;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -232,14 +235,29 @@ public class Main extends Application {
 					}
 				}
 			});
-			Button mutual = new Button("List Mutual Friends");
-			
-			mutual.setStyle("-fx-background-color: #FFC000; "
-					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");;
 			TextField user1 = new TextField();
 			TextField user2 = new TextField();
 			user1.setMaxWidth(100);
 			user2.setMaxWidth(100);
+
+			Button mutual = new Button("List Mutual Friends");
+			
+			mutual.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+			mutual.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					String mf1 = user1.getText();
+					String mf2 = user2.getText();
+					Set<String> mFriend = new HashSet<String>();
+					mFriend = network.getMutualFriends(mf1,mf2);
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Mutual Friends");
+					alert.setHeaderText("Mutual Friends:");
+					String s =mFriend.toString();
+					alert.setContentText(s);
+					alert.show();
+				}
+			});
 			// Vbox
 			vb.setSpacing(20);
 			vb.setPadding(new Insets(0, 0, 0, 50));
@@ -408,6 +426,7 @@ public class Main extends Application {
 			ENS.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
 					//System.out.println("cancel might have been pressed");
+					infoMessage("Quitting, goodbye!");
 				}
 			});
 			td.showAndWait();
