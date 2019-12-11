@@ -156,6 +156,9 @@ public class SocialNetwork implements SocialNetworkADT {
         }else {
         	return null;
         }
+        for(int i = 0; i < personList.size(); i ++) {
+        	personList.get(i).visited = false;
+        }
 		Person Person1 = personList.get(users.indexOf(person1));
 		Person Person2  = personList.get(users.indexOf(person2));
 		 
