@@ -388,5 +388,9 @@ public class SocialNetwork implements SocialNetworkADT {
 		}
 
 	}
-
+   public void removeAll() {
+	   graph = new Graph();
+		recordOperations = new ArrayList<String>();
+       personList =  new ArrayList<Person>();
+   }
 }
