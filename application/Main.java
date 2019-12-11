@@ -30,37 +30,67 @@ public class Main extends Application {
 	private static final int WINDOW_WIDTH = 800;
 	private static final int WINDOW_HEIGHT = 600;
 	private static final String APP_TITLE = "Social Network";
-	Button buttonClose;
+	
 	private SocialNetwork network = new SocialNetwork();
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-
-		// Main layout is Border Pane example (top,left,center,right,bottom)
-		BorderPane border = new BorderPane();
-
-		// set background color for the pane
+	// Main layout is Border Pane example (top,left,center,right,bottom)
+	BorderPane border = new BorderPane();
+	
+	
+	Button buttonClose;
+	private void setBackgroundColor() {
 		border.setStyle("-fx-background-color: #BFBFBF");
-
-		// set feedback
+	}
+	
+	private void setUpBottomBox() {
 		HBox feedback = new HBox();
 		Label feedLabel = new Label("Feedback");
 		TextField feedText = new TextField();
-		Button feedButton = new Button("Submit");
+
 
 		feedLabel.setStyle("-fx-background-color: #FFC000");
 		feedLabel.setPrefSize(60, 25);
 		feedText.setPrefWidth(650);
-		feedButton.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
 		feedback.setSpacing(10);
-		feedback.getChildren().addAll(feedLabel, feedText, feedButton);
+		feedback.getChildren().addAll(feedLabel, feedText);
 		border.setBottom(feedback);
+	}
+	
+	private void setUpTopBox() {
+		// set top menu
+				Button button1 = new Button("Back");
+				Button button2 = new Button("Undo");
+				Button button3 = new Button("Redo");
+				Button button4 = new Button("Save And Quit");
+				Button button5 = new Button("Quit Without Save");
 
-		// border.setLeft(imageView);
+				button1.setStyle("-fx-background-color: #FFC000; "
+						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+				button2.setStyle("-fx-background-color: #FFC000; "
+						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+				button3.setStyle("-fx-background-color: #FFC000; "
+						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+				button4.setStyle("-fx-background-color: #FFC000; "
+						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+				button5.setStyle("-fx-background-color: #FFC000; "
+						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
 
+				button1.setTranslateX(440);
+				button2.setTranslateX(440);
+				button3.setTranslateX(440);
+				button4.setTranslateX(440);
+				button5.setTranslateX(440);
+
+				HBox hbox = new HBox(button1, button2, button3, button4, button5);
+				border.setTop(hbox);
+	}
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		setBackgroundColor();
+		// set feedback
+		setUpBottomBox();
+		setUpTopBox();
+		
 		VBox vb2 = new VBox();
-		// Label L = new Label("CS400 MyFirstJavaFX");
 
 		// Textfield 1 for user
 		TextField ld = new TextField();
@@ -203,43 +233,15 @@ public class Main extends Application {
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
 
-		// set top menu
-		Button button1 = new Button("Back");
-		Button button2 = new Button("Undo");
-		Button button3 = new Button("Redo");
-		Button button4 = new Button("Save And Quit");
-		Button button5 = new Button("Quit Without Save");
-
-		button1.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		button2.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		button3.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		button4.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		button5.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-
-		button1.setTranslateX(440);
-		button2.setTranslateX(440);
-		button3.setTranslateX(440);
-		button4.setTranslateX(440);
-		button5.setTranslateX(440);
-
-		HBox hbox = new HBox(button1, button2, button3, button4, button5);
-		border.setTop(hbox);
-
 		VBox left = new VBox();
 		VBox vb = new VBox();
-		// Label L = new Label("CS400 MyFirstJavaFX");
+
 
 		FileInputStream inputImage = null;
 
 		try {
 			inputImage = new FileInputStream("ATEAM.png");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
