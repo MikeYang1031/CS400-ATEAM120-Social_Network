@@ -121,8 +121,6 @@ public class SocialNetwork implements SocialNetworkADT {
 
 				if (friend1.get(i).equals(friend2.get(j))) {
 					mFriend.add(friend1.get(i));
-					
-					System.out.println(mFriend);
 				}
 			}
 		}
@@ -246,9 +244,9 @@ public class SocialNetwork implements SocialNetworkADT {
 
 		for (int i = 0; i < sizeOfNetwork; i++) {
 
-			if (!visitedVertex[sizeOfNetwork]) {
+			if (!visitedVertex[i]) {
 
-			//	DFS(i, visitedVertex, allNetWorkUsers);
+				DFS(i, visitedVertex, allNetWorkUsers);
 				groupNum++;
 			}
 		}
@@ -257,17 +255,17 @@ public class SocialNetwork implements SocialNetworkADT {
 	}
 
 	// this is a private helper class
-//	private void DFS(int i, boolean[] visitedVertices, List<String> allNetWorkUsers) {
-//
-//		visitedVertices[i] = true;
-//
-//		for (Person x : getFriends(allNetWorkUsers.get(i).getName())) {
-//			int index = allNetWorkUsers.indexOf(x);
-//			if (!visitedVertices[index]) {
-//				DFS(index, visitedVertices, allNetWorkUsers);
-//			}
-//		}
-//	}
+	private void DFS(int i, boolean[] visitedVertices, List<String> allNetWorkUsers) {
+
+		visitedVertices[i] = true;
+
+		for (Person x : getFriends(allNetWorkUsers.get(i))) {
+			int index = allNetWorkUsers.indexOf(x);
+			if (!visitedVertices[index]) {
+				DFS(index, visitedVertices, allNetWorkUsers);
+			}
+		}
+	}
 
 	// this is a private user class to get all the user in the graph and
 	// then store them in the list
