@@ -18,11 +18,11 @@ import java.util.Set;
  *
  */
 public class SocialNetwork implements SocialNetworkADT {
-	ArrayList<String> users = new ArrayList<String>();
+	ArrayList<String> users;
 	private Graph graph;
 	private List<String> tempStore;
 	private ArrayList<Person> personList;
-	private Person centralUser;
+	private String centralUser;
 	private Queue<Person> queue;
 
 	// constructor
@@ -31,6 +31,8 @@ public class SocialNetwork implements SocialNetworkADT {
 		graph = new Graph();
 		recordOperations = new ArrayList<String>();
         personList =  new ArrayList<Person>();
+        users = new ArrayList<String>();
+        centralUser = null;
         
 	}
 
@@ -314,17 +316,25 @@ public class SocialNetwork implements SocialNetworkADT {
 	  }
 
 	@Override
-	public Person getCentralUser() {
+	public String getCentralUser() {
 		return centralUser;
 	}
 
 	@Override
 	public void setCentral(String setUser) {
-
-		centralUser.setName(setUser);
+       if(!users.contains(setUser)) {
+    	   System.out.println("User not exist");
+       }
+		centralUser = setUser;
+		System.out.println(centralUser);
 		recordOperations.add("s " + setUser);
 	}
-
+    public ArrayList<String> getCenterFriend(String center){
+    	 ArrayList<String> friends = new  ArrayList<String>();
+    	 friends = (ArrayList<String>) graph.getAdjacentVerticesOf(center);
+		return friends;
+    	
+    }
 	@Override
 	public void loadFromFile(File file) {
 		try {
@@ -389,8 +399,9 @@ public class SocialNetwork implements SocialNetworkADT {
 
 	}
    public void removeAll() {
-	   graph = new Graph();
-		recordOperations = new ArrayList<String>();
-       personList =  new ArrayList<Person>();
+//	   graph = new Graph();
+//		recordOperations = new ArrayList<String>();
+//       personList =  new ArrayList<Person>();
+//       users = new ArrayList<String>();
    }
 }
