@@ -25,7 +25,7 @@ public interface SocialNetworkADT {
     //
     public List<String> getShortestPath(String person1, String person2);
     //
-    public Set<Graph> getConnectedComponents();
+    public int getConnectedComponents();
     //
     public void loadFromFile(File file);
     //
