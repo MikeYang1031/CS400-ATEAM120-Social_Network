@@ -1,10 +1,11 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
     private String name;    
-    private String[] FriendShip;
+    private ArrayList<String> FriendShip;
     boolean visited;
     Person predecessor;
     int weight;
@@ -17,13 +18,15 @@ public class Person {
         this.weight = 1; // each person has a weight of 1
         this.totalWeight = 100; // each has a total weight of 100 to start
         this.predecessor = null;
+        FriendShip = new ArrayList<String>();
+        list_of_user_friends = new ArrayList<Person>();
     }
    
     
-    public Person(String name, String[] FriendShip) {
+    public Person(String name, ArrayList<String> FriendShip) {
         this.name = name;
         this.FriendShip = FriendShip;
-        
+        list_of_user_friends = new ArrayList<Person>();
     }
     
     public Person() {
@@ -35,16 +38,20 @@ public class Person {
         return this.name;
     }
     
-    public String[] getFriendShip() {
+    public ArrayList<String> getFriendShip() {
         return this.FriendShip;
     }
     
     public void setName(String name) {
         this.name = name;
     }
-
-    public void setFriendShip(String[] FriendShip) {
-        this.FriendShip = FriendShip;
+ 
+//    public void setFriendShip(String[] FriendShip) {
+//        this.FriendShip = FriendShip;
+//    }  
+    public void addFriendShip(String friend, Person person5) {
+         FriendShip.add(friend);
+         list_of_user_friends.add(person5);
     }  
 
     public List<Person> getListOfUsersFriends() {
