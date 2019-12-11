@@ -54,7 +54,12 @@ public class Main extends Application {
 		feedback.getChildren().addAll(feedLabel, feedText);
 		border.setBottom(feedback);
 	}
-	
+	private void alertMessage(String message) {
+		Alert info = new Alert(AlertType.INFORMATION);
+		info.setTitle("ERROR");
+		info.setContentText(message);
+		info.showAndWait();
+	}
 	private void setUpTopBox() {
 		// set top menu
 		Button button1 = new Button("Save And Quit");
