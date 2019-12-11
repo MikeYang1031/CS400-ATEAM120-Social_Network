@@ -57,31 +57,19 @@ public class Main extends Application {
 	
 	private void setUpTopBox() {
 		// set top menu
-				Button button1 = new Button("Back");
-				Button button2 = new Button("Undo");
-				Button button3 = new Button("Redo");
-				Button button4 = new Button("Save And Quit");
-				Button button5 = new Button("Quit Without Save");
+		Button button1 = new Button("Save And Quit");
+		Button button2 = new Button("Quit Without Save");
 
-				button1.setStyle("-fx-background-color: #FFC000; "
-						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-				button2.setStyle("-fx-background-color: #FFC000; "
-						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-				button3.setStyle("-fx-background-color: #FFC000; "
-						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-				button4.setStyle("-fx-background-color: #FFC000; "
-						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-				button5.setStyle("-fx-background-color: #FFC000; "
-						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+		button1.setStyle("-fx-background-color: #FFC000; "
+				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+		button2.setStyle("-fx-background-color: #FFC000; "
+				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
 
-				button1.setTranslateX(440);
-				button2.setTranslateX(440);
-				button3.setTranslateX(440);
-				button4.setTranslateX(440);
-				button5.setTranslateX(440);
+		button1.setTranslateX(595);
+		button2.setTranslateX(595);
 
-				HBox hbox = new HBox(button1, button2, button3, button4, button5);
-				border.setTop(hbox);
+		HBox hbox = new HBox(button1, button2);
+		border.setTop(hbox);
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
