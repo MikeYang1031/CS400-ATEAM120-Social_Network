@@ -21,15 +21,17 @@ public class SocialNetwork implements SocialNetworkADT {
 	ArrayList<String> users = new ArrayList<String>();
 	private Graph graph;
 	private List<String> tempStore;
-	private Queue<Person> queue;
+	private ArrayList<Person> personList;
 	private Person centralUser;
+	private Queue<Person> queue;
 
 	// constructor
 	public SocialNetwork() {
 
 		graph = new Graph();
 		recordOperations = new ArrayList<String>();
-
+        personList =  new ArrayList<Person>();
+        
 	}
 
 //record every operation made by user
@@ -37,16 +39,30 @@ public class SocialNetwork implements SocialNetworkADT {
 
 	@Override
 	public boolean addFriends(String person1, String person2) {
+		if(person1 == null || person2 == null) {
+			return false;
+		}
 		if (!users.contains(person1)) {
 			addUser(person1);
 		}
 		if (!users.contains(person2)) {
 			addUser(person2);
 		}
-	
-
+		Person personone = new Person();
+		Person persontwo = new Person();
+         for(int i = 0; i < personList.size(); i ++) {
+        	 if(personList.get(i).getName().equals(person1)) {
+        		 personone = personList.get(i);
+        	 }
+        	 if(personList.get(i).getName().equals(person2)) {
+        		 persontwo = personList.get(i);
+        	 }
+         }
+         personone.addFriendShip(person2, persontwo);
+         persontwo.addFriendShip(person1, personone);
+         
 		graph.addEdge(person1, person2);
-
+        
 		recordOperations.add("a " + person1 + " " + person2);
 
 		return true;
@@ -66,10 +82,16 @@ public class SocialNetwork implements SocialNetworkADT {
 
 	@Override
 	public boolean addUser(String person) {
+		if(person == null) {
+			return false;
+		}
 		if (users.contains(person)) {
 
 			return false;
 		}
+		Person user = new Person(person);
+		
+		personList.add(user);
 		users.add(person);
 		graph.addVertex(person);
 		recordOperations.add("a " + person);
@@ -129,9 +151,14 @@ public class SocialNetwork implements SocialNetworkADT {
 
 	@Override
 	public List<String> getShortestPath(String person1, String person2) {
-
-		Person Person1 = new Person(person1);
-		Person Person2 = new Person(person2);
+        if(users.contains(person1) && users.contains(person2)) {
+        	
+        }else {
+        	return null;
+        }
+		Person Person1 = personList.get(users.indexOf(person1));
+		Person Person2  = personList.get(users.indexOf(person2));
+		 
 
 		try {
 			tempStore = findPathAlgorithm(Person1, Person2);
@@ -170,7 +197,7 @@ public class SocialNetwork implements SocialNetworkADT {
 
 			// checks that person2 exists in graph, otherwise throws exception
 			List<String> vertexList = graph.getVertexList();
-			if (!vertexList.contains(person2))
+			if (!vertexList.contains(person2.getName()))
 				throw new Exception(person2 + " not exist");
 
 			while (!queue.isEmpty()) {
