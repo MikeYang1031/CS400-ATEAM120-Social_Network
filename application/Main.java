@@ -417,6 +417,26 @@ public class Main extends Application {
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
 	}
+	
+	@Override
+	public void stop(){
+		//infoMessage("Stage is closing");
+		ButtonType saveButtonType = new ButtonType("Save", ButtonData.OK_DONE);
+		ButtonType ENSButtonType = new ButtonType("Exit without Save", ButtonData.CANCEL_CLOSE);
+		TextInputDialog td = new TextInputDialog("File name or path");
+		td.setHeaderText("Save the progress?"); 
+		//td.getDialogPane().getButtonTypes().addAll(saveButtonType, ENSButtonType);
+		td.showAndWait();
+		File file = new File(td.getEditor().getText());
+		if (file.exists()) {
+			network.saveToFile(file);
+			infoMessage("Successfully saved, goodbye!");
+			//td.showAndWait();
+		}else {
+			infoMessage("File Doesn't exists, save failed!");
+		}
+	    // Save file
+	}
 
 	/**
 	 * @param args
