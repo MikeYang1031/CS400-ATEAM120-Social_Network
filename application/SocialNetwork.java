@@ -220,11 +220,52 @@ public class SocialNetwork implements SocialNetworkADT {
         }
     }
 
+    // This class serves to get the number of disconnected groups in the network
     @Override
-    public Set<Graph> getConnectedComponents() {
-        return null;
-        // TODO Auto-generated method stub
-
+    public int getConnectedComponents() {
+      
+      int groupNum = 0;
+      List<Person> allNetWorkUsers = getAllUsers();
+      
+      int sizeOfNetwork = allNetWorkUsers.size();
+      
+      boolean [] visitedVertex = new boolean [sizeOfNetwork];
+      
+      for (int i=0; i<sizeOfNetwork; i++) {
+        
+        if (!visitedVertex[sizeOfNetwork]) {
+          
+          DFS(i, visitedVertex, allNetWorkUsers);
+          groupNum++;
+        }
+      }
+      
+      return groupNum;
+    }
+    // this is a private helper class 
+    private void DFS(int i, boolean[] visitedVertices, List<Person>  allUsers) {
+      
+      visitedVertices[i] = true;
+      
+      for (Person x: getFriends(allUsers.get(i).getName())) {
+        int index = allUsers.indexOf(x);
+        if (!visitedVertices[index]) {
+          DFS (index,visitedVertices, allUsers);
+        }
+      }
+    }
+    
+    // this is a private user class to get all the user in the graph and 
+    // then store them in the list
+    private List<Person> getAllUsers () {
+      
+      Set<Person> allUserSet = graph.getAllVertices();
+      ArrayList<Person> usersList = new ArrayList<Person>();
+      
+      for (Person eachUser:allUserSet) {
+        usersList.add(eachUser);
+      }
+      return usersList;
     }
 
     @Override
