@@ -309,7 +309,7 @@ public class Main extends Application {
 				Button button2 = new Button("User1");
 				Button button3 = new Button("User2");
 				button3.setTranslateX(100);
-				buttonClose = new Button("Quit");
+				buttonClose = new Button("Back to first page");
 //     		Button button5 = new Button("Quit Without Save");
 
 				button1.setStyle("-fx-background-color: #FFC000; "
