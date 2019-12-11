@@ -23,6 +23,7 @@ public class SocialNetwork implements SocialNetworkADT {
     private Graph graph;
     private List<String> tempStore;
     private Queue<Person> queue;
+	private Person centralUser;
 
     // constructor
     public SocialNetwork() {
@@ -268,12 +269,16 @@ public class SocialNetwork implements SocialNetworkADT {
       return usersList;
     }
 
+    @Override 
+    public Person getCentralUser() {
+      return centralUser;
+    }
+    
     @Override
-    public boolean setCentral(String person) {
-	// TODO
-		recordOperations.add("s " + person);
-
-        return false;
+    public void setCentral(String setUser) {
+      
+      centralUser.setName(setUser);
+        recordOperations.add("s " + setUser);
     }
 
     @Override
