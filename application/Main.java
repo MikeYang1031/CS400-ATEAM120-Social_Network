@@ -13,8 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -285,68 +288,6 @@ public class Main extends Application {
 		dis.setStyle("-fx-background-color: #FFC000; "
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
 
-		// pop up new window
-		dis.setOnAction(new EventHandler<ActionEvent>() {
-
-			public void handle(ActionEvent event) {
-
-				Label secondLabel = new Label("Friend relationship");
-
-				BorderPane secondaryLayout = new BorderPane();
-				secondaryLayout.setStyle("-fx-background-color: #BFBFBF");
-
-				Button button1 = new Button("Set central user");
-				TextField t1 = new TextField();
-				t1.setMaxWidth(200);
-				button1.setOnAction(new EventHandler<ActionEvent>() {
-					public void handle(ActionEvent event) {
-						if ((t1.getText() != null && !t1.getText().isEmpty())) {
-							network.setCentral(t1.getText());
-							infoMessage("Set central: "+t1.getText());
-						}
-					}
-				});
-				Button button2 = new Button("User1");
-				Button button3 = new Button("User2");
-				button3.setTranslateX(100);
-				buttonClose = new Button("Back to first page");
-//     		Button button5 = new Button("Quit Without Save");
-
-				button1.setStyle("-fx-background-color: #FFC000; "
-						+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-
-				VBox vbox = new VBox(button1, t1);
-				secondaryLayout.setTop(vbox);
-				Scene secondScene = new Scene(secondaryLayout, 800, 600);
-				HBox hbox = new HBox(button2, button3);
-				hbox.setTranslateX(230);
-				hbox.setTranslateY(230);
-				secondaryLayout.setCenter(hbox);
-
-				buttonClose.setOnAction(new EventHandler<ActionEvent>() {
-					public void handle(ActionEvent event) {
-						Stage stage = (Stage) buttonClose.getScene().getWindow();// set the button
-						stage.close();// to close the window
-					}
-
-				});
-
-				secondaryLayout.setBottom(buttonClose);
-				// New window
-				Stage newWindow = new Stage();
-				newWindow.setTitle("Friend Relationship");
-				newWindow.setScene(secondScene);
-
-				// Set position of second window, related to primary window.
-				newWindow.setX(primaryStage.getX());
-				newWindow.setY(primaryStage.getY());
-
-				newWindow.show();
-
-			}
-
-		});
-
 		Button exp = new Button("Export File");
 		exp.setMinSize(100, 30);
 		exp.setTranslateY(0);
@@ -389,10 +330,15 @@ public class Main extends Application {
 		user1.setMaxWidth(100);
 		user2.setMaxWidth(100);
 		
+		Button central = new Button("Set Central User");
+		central.setStyle("-fx-background-color: #FFC000; "
+				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+		TextField centralUser = new TextField();
+		centralUser.setMaxWidth(100);
 		// Vbox2
 		vb2.setSpacing(20);
-		vb2.setPadding(new Insets(0, 70, 0, 0));
-		vb2.getChildren().addAll(ld, load, ex, exp, r2, user1, user2, shortestPath, dis);
+		vb2.setPadding(new Insets(0, 40, 0, 0));
+		vb2.getChildren().addAll(ld, load, ex, exp, r2, user1, user2, shortestPath, centralUser, central, dis);
 		vb2.setTranslateY(25);
 		vb2.setAlignment(Pos.CENTER);
 
@@ -402,9 +348,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		setBackgroundColor();
-		// set feedback
-		//setUpBottomBox();
-		setUpTopBox();
 		setUpLeftBox();
 		setUpRightBox(primaryStage);
 
