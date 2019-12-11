@@ -222,8 +222,10 @@ public class SocialNetwork implements SocialNetworkADT {
 			Collections.reverse(tempStore); // reverses list so it appears starting at person1, ending at person2
 
 			// if store doesn't contain person2 throw exception
-			if (!tempStore.contains(person2.getName()))
+			if (!tempStore.contains(person2.getName())) {
 				throw new Exception("Can not find path.");
+			}
+			
 			return tempStore;
 		}
 	}
@@ -260,52 +262,46 @@ public class SocialNetwork implements SocialNetworkADT {
 
 	// This class serves to get the number of disconnected groups in the network
 	@Override
-	public int getConnectedComponents() {
-
-		int groupNum = 0;
-		List<String> allNetWorkUsers = getAllUsers();
-
-		int sizeOfNetwork = allNetWorkUsers.size();
-
-		boolean[] visitedVertex = new boolean[sizeOfNetwork];
-
-		for (int i = 0; i < sizeOfNetwork; i++) {
-
-			if (!visitedVertex[i]) {
-
-				DFS(i, visitedVertex, allNetWorkUsers);
-				groupNum++;
-			}
-		}
-
-		return groupNum;
-	}
-
-	// this is a private helper class
-	private void DFS(int i, boolean[] visitedVertices, List<String> allNetWorkUsers) {
-
-		visitedVertices[i] = true;
-
-		for (Person x : getFriends(allNetWorkUsers.get(i))) {
-			int index = allNetWorkUsers.indexOf(x);
-			if (!visitedVertices[index]) {
-				DFS(index, visitedVertices, allNetWorkUsers);
-			}
-		}
-	}
-
-	// this is a private user class to get all the user in the graph and
-	// then store them in the list
-	private List<String> getAllUsers() {
-
-		Set<String> allUserSet = graph.getAllVertices();
-		ArrayList<String> usersList = new ArrayList<String>();
-
-		for (String eachUser : allUserSet) {
-			usersList.add(eachUser);
-		}
-		return usersList;
-	}
+	   public int getConnectedComponents() {
+	      
+	      int groupNum =0;
+	      ArrayList<String> visitedVertices = new ArrayList<String>();
+	      List<String> allNetWorkUsers = getAllUsers();
+	      if (graph.order() > 0) {
+	        for (String user: graph.getAllVertices()) {
+	         
+	          if (!visitedVertices.contains(user)) {
+	            connectedCalculator(user, visitedVertices);
+	            groupNum++;
+	          }
+	        }
+	      }
+	      return groupNum;
+	    }
+	    
+	    private void connectedCalculator (String user, ArrayList<String> visitedVertices) {
+	      visitedVertices.add(user);
+	      for (String userName: graph.getAdjacentVerticesOf(user)) {
+	        if (!visitedVertices.contains(userName)) {
+	         this.connectedCalculator(userName, visitedVertices);
+	        }
+	      }
+	      
+	    }
+	    
+	    
+	  // this is a private user class to get all the user in the graph and 
+	  // then store them in the list
+	  private List<String> getAllUsers () {
+	   
+	    Set<String> allUserSet = graph.getAllVertices();
+	    ArrayList<String> usersList = new ArrayList<String>();
+	    
+	    for (String eachUser:allUserSet) {    
+	      usersList.add(eachUser);
+	   }
+	    return usersList;
+	  }
 
 	@Override
 	public Person getCentralUser() {
