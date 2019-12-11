@@ -21,7 +21,7 @@ public interface SocialNetworkADT {
     // get edge
     public Set<Person> getFriends(String person);
     //
-    public Set<Person> getMutualFriends(String person1, String person2);
+    public Set<String> getMutualFriends(String person1, String person2);
     //
     public List<String> getShortestPath(String person1, String person2);
     //
