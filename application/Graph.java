@@ -113,6 +113,7 @@ public class Graph implements GraphADT {
                         addVertex(person2);// add the vertex2 as vertex first
                     }
                     adjList.get(person1).add(person2);// add vertex2 to edge
+                    adjList.get(person2).add(person1);// add vertex2 to edge
                     edgeNumber++;// add the edge number
                 }
             } else {
@@ -136,6 +137,7 @@ public class Graph implements GraphADT {
             if (adjList.containsKey(person1)) {
                 if (adjList.get(person1).contains(person2)) {// if the vertex2 is in the edge
                     adjList.get(person1).remove(person2);// remove the vertex2 from the edge
+                    adjList.get(person2).remove(person1);
                     edgeNumber--;
                 } else {
                     // if no vertex2, no change
