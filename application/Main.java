@@ -39,6 +39,8 @@ public class Main extends Application {
 	
 	
 	Button buttonClose;
+	
+	
 	private void setBackgroundColor() {
 		border.setStyle("-fx-background-color: #BFBFBF");
 	}
@@ -72,14 +74,15 @@ public class Main extends Application {
 		HBox hbox = new HBox(button1, button2);
 		border.setTop(hbox);
 	}
-	private void alertMessage(String message) {
+	private void infoMessage(String message) {
 		Alert info = new Alert(AlertType.INFORMATION);
-		info.setTitle("ERROR");
+		info.setTitle("Message");
 		info.setContentText(message);
 		info.showAndWait();
 	}
 	
 	private void setUpLeftBox() {
+		
 		try {
 			VBox left = new VBox();
 			VBox vb = new VBox();
@@ -121,7 +124,7 @@ public class Main extends Application {
 					String name = username.getText();
 					if (name != null && !name.isEmpty()) {
 						network.addUser(name);
-						System.out.println("added a user "+name);
+						infoMessage("added a user " + name);
 					}
 				}
 			});
@@ -133,7 +136,7 @@ public class Main extends Application {
 					String name = username.getText();
 					if (name != null && !name.isEmpty()) {
 						network.removeUser(name);
-						System.out.println("removed a user "+name);
+						infoMessage("removed a user " + name);
 					}
 				}
 			});
@@ -200,7 +203,7 @@ public class Main extends Application {
 					if (f1 != null && !f1.isEmpty() 
 							&& f2 != null && !f2.isEmpty()) {
 						network.addFriends(f1,f2);
-						System.out.println("added a friendship between "+f1+" and "+f2);
+						infoMessage("added a friendship between " + f1 + " and " + f2);
 					}
 				}
 			});
@@ -211,7 +214,7 @@ public class Main extends Application {
 					if (f1 != null && !f1.isEmpty() 
 							&& f2 != null && !f2.isEmpty()) {
 						network.removeFriends(f1,f2);
-						System.out.println("removed a friendship between "+f1+" and "+f2);
+						infoMessage("removed a friendship between "+f1+" and "+f2);
 					}
 				}
 			});
@@ -280,7 +283,7 @@ public class Main extends Application {
 					public void handle(ActionEvent event) {
 						if ((t1.getText() != null && !t1.getText().isEmpty())) {
 							network.setCentral(t1.getText());
-							System.out.println("Set central: "+t1.getText());
+							infoMessage("Set central: "+t1.getText());
 						}
 					}
 				});
@@ -336,7 +339,7 @@ public class Main extends Application {
 				File file = new File(ex.getText());
 				if (file.exists()) {
 					network.saveToFile(file);
-					System.out.println("saved");
+					infoMessage("saved");
 				}
 			}
 		});
@@ -352,9 +355,9 @@ public class Main extends Application {
 				File file = new File(ld.getText());
 				if (file.exists()) {
 					network.loadFromFile(file);
-					System.out.println("loaded");
+					infoMessage("loaded");
 				}else {
-					System.out.println("File doesn't exist: " + ld.getText());
+					infoMessage("File doesn't exist: " + ld.getText());
 				}
 			}
 		});
