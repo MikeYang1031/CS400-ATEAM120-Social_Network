@@ -122,6 +122,7 @@ public class Main extends Application {
             r.setPrefWidth(200);
             //info TextField
             Text info = new Text();
+            info.setText(network.updateInfo());
             // Textfield 1 for user
             TextField username = new TextField();
             username.setPrefHeight(40);
@@ -163,7 +164,7 @@ public class Main extends Application {
                         if (network.removeUser(name) == true) {
                             infoMessage("removed user " + name);
                         } else {
-                            infoMessage(name + "does not in the network");
+                            infoMessage(name + " does not in the network");
 
                         }
                     } else {
