@@ -259,90 +259,96 @@ public class Main extends Application {
 	}
 	
 	private void setUpRightBox(Stage primaryStage) {
-		VBox vb2 = new VBox();
-
-		// Textfield 1 for user
-		TextField ld = new TextField();
-		ld.setPrefHeight(30);
-
-		ld.setPrefWidth(300);
-		ld.setPrefColumnCount(10);
-		ld.setPadding(new Insets(0, 0, 0, 0));
-
-//         Empty space
-		Region r2 = new Region();
-		r2.setPrefHeight(30);
-		r2.setPrefWidth(200);
-
-		// Textfield 2
-		TextField ex = new TextField();
-		ex.setPrefHeight(30);
-		ex.setPrefWidth(300);
-		ex.setPrefColumnCount(10);
-		ex.setPadding(new Insets(0, 0, 0, 0));
-
-		Button dis = new Button("Display");
-		dis.setMinSize(200, 40);
-		dis.setTranslateY(25);
-		dis.setTranslateX(0);
-		dis.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-
-		Button exp = new Button("Export File");
-		exp.setMinSize(100, 30);
-		exp.setTranslateY(0);
-		exp.setTranslateX(0);
-		exp.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		exp.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				File file = new File(ex.getText());
-				if (file.exists()) {
-					network.saveToFile(file);
-					infoMessage("saved");
+		try {
+			VBox vb2 = new VBox();
+	
+			// Textfield 1 for user
+			TextField ld = new TextField();
+			ld.setPrefHeight(30);
+	
+			ld.setPrefWidth(300);
+			ld.setPrefColumnCount(10);
+			ld.setPadding(new Insets(0, 0, 0, 0));
+	
+	//         Empty space
+			Region r2 = new Region();
+			r2.setPrefHeight(30);
+			r2.setPrefWidth(200);
+	
+			// Textfield 2
+			TextField ex = new TextField();
+			ex.setPrefHeight(30);
+			ex.setPrefWidth(300);
+			ex.setPrefColumnCount(10);
+			ex.setPadding(new Insets(0, 0, 0, 0));
+	
+			Button dis = new Button("Display");
+			dis.setMinSize(200, 40);
+			dis.setTranslateY(25);
+			dis.setTranslateX(0);
+			dis.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+	
+			Button exp = new Button("Export File");
+			exp.setMinSize(100, 30);
+			exp.setTranslateY(0);
+			exp.setTranslateX(0);
+			exp.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+			exp.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					File file = new File(ex.getText());
+					if (file.exists()) {
+						network.saveToFile(file);
+						infoMessage("saved");
+					}
 				}
-			}
-		});
-
-		Button load = new Button("Load File");
-		load.setMinSize(100, 30);
-		load.setTranslateY(0);
-		load.setTranslateX(0);
-		load.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		load.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				File file = new File(ld.getText());
-				if (file.exists()) {
-					network.loadFromFile(file);
-					infoMessage("loaded");
-				}else {
-					infoMessage("File doesn't exist: " + ld.getText());
+			});
+	
+			Button load = new Button("Load File");
+			load.setMinSize(100, 30);
+			load.setTranslateY(0);
+			load.setTranslateX(0);
+			load.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+			load.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					File file = new File(ld.getText());
+					if (file.exists()) {
+						network.loadFromFile(file);
+						infoMessage("loaded");
+					}else {
+						infoMessage("File doesn't exist: " + ld.getText());
+					}
 				}
-			}
-		});
-		Button shortestPath = new Button("Show Shortest Path");
-		
-		shortestPath.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");;
-		TextField user1 = new TextField();
-		TextField user2 = new TextField();
-		user1.setMaxWidth(100);
-		user2.setMaxWidth(100);
-		
-		Button central = new Button("Set Central User");
-		central.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-		TextField centralUser = new TextField();
-		centralUser.setMaxWidth(100);
-		// Vbox2
-		vb2.setSpacing(20);
-		vb2.setPadding(new Insets(0, 40, 0, 0));
-		vb2.getChildren().addAll(ld, load, ex, exp, r2, user1, user2, shortestPath, centralUser, central, dis);
-		vb2.setTranslateY(25);
-		vb2.setAlignment(Pos.CENTER);
+			});
+			Button shortestPath = new Button("Show Shortest Path");
+			
+			shortestPath.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");;
+			TextField user1 = new TextField();
+			TextField user2 = new TextField();
+			user1.setMaxWidth(100);
+			user2.setMaxWidth(100);
+			
+			Button central = new Button("Set Central User");
+			central.setStyle("-fx-background-color: #FFC000; "
+					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+			TextField centralUser = new TextField();
+			centralUser.setMaxWidth(100);
+			// Vbox2
+			vb2.setSpacing(20);
+			vb2.setPadding(new Insets(0, 40, 0, 0));
+			vb2.getChildren().addAll(ld, load, ex, exp, r2, user1, user2, shortestPath, centralUser, central, dis);
+			vb2.setTranslateY(25);
+			vb2.setAlignment(Pos.CENTER);
+	
+			border.setRight(vb2);
 
-		border.setRight(vb2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -363,37 +369,42 @@ public class Main extends Application {
 	
 	@Override
 	public void stop(){
-		//infoMessage("Stage is closing");
-		ButtonType saveButtonType = new ButtonType("Save", ButtonData.YES);
-		ButtonType ENSButtonType = new ButtonType("Exit without Save", ButtonData.NO);
-		TextInputDialog td = new TextInputDialog("File name or path");
-		td.setHeaderText("Save the progress?"); 
-		td.getDialogPane().getButtonTypes().set(0,saveButtonType);
-		td.getDialogPane().getButtonTypes().set(1,ENSButtonType);
-		
-		Button save = (Button) td.getDialogPane().lookupButton(saveButtonType);
-		save.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				// ok was pressed
-				//System.out.print("save pressed");
-				File file = new File(td.getEditor().getText());
-				if (file.exists()) {
-					network.saveToFile(file);
-					infoMessage("Successfully saved, goodbye!");
-					//td.showAndWait();
-				}else {
-					infoMessage("File Doesn't exists, save failed!");
+		try {
+			//infoMessage("Stage is closing");
+			ButtonType saveButtonType = new ButtonType("Save", ButtonData.YES);
+			ButtonType ENSButtonType = new ButtonType("Exit without Save", ButtonData.NO);
+			TextInputDialog td = new TextInputDialog("File name or path");
+			td.setHeaderText("Save the progress?"); 
+			td.getDialogPane().getButtonTypes().set(0,saveButtonType);
+			td.getDialogPane().getButtonTypes().set(1,ENSButtonType);
+			
+			Button save = (Button) td.getDialogPane().lookupButton(saveButtonType);
+			save.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					// ok was pressed
+					//System.out.print("save pressed");
+					File file = new File(td.getEditor().getText());
+					if (file.exists()) {
+						network.saveToFile(file);
+						infoMessage("Successfully saved, goodbye!");
+						//td.showAndWait();
+					}else {
+						infoMessage("File Doesn't exists, save failed!");
+					}
+				    // Save file
 				}
-			    // Save file
-			}
-		});
-		Button ENS = (Button) td.getDialogPane().lookupButton(ENSButtonType);
-		ENS.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				//System.out.println("cancel might have been pressed");
-			}
-		});
-		td.showAndWait();
+			});
+			Button ENS = (Button) td.getDialogPane().lookupButton(ENSButtonType);
+			ENS.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					//System.out.println("cancel might have been pressed");
+				}
+			});
+			td.showAndWait();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
