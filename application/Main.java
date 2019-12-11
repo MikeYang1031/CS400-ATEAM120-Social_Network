@@ -121,11 +121,16 @@ public class Main extends Application {
 					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
 			addUser.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
-					String name = username.getText();
-					if (name != null && !name.isEmpty()) {
-						network.addUser(name);
-						infoMessage("added a user " + name);
-					}
+				    String name = username.getText();
+                    if (name != null && !name.isEmpty()) {
+                        if (network.addUser(name) == true) {
+                            infoMessage("added a user " + name);
+                        } else {
+                            infoMessage("can not add duplicate name");
+                        }
+                    } else {
+                        infoMessage("not working");
+                    }
 				}
 			});
 			Button removeUser = new Button("Remove User");
@@ -133,11 +138,17 @@ public class Main extends Application {
 					+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
 			removeUser.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
-					String name = username.getText();
-					if (name != null && !name.isEmpty()) {
-						network.removeUser(name);
-						infoMessage("removed a user " + name);
-					}
+					   String name = username.getText();
+                    if (name != null && !name.isEmpty()) {
+                        if (network.removeUser(name) == true) {
+                            infoMessage("removed user " + name);
+                        } else {
+                            infoMessage(name + "does not in the network");
+
+                        }
+                    } else {
+                        infoMessage("not working");
+                    }
 				}
 			});
 			userButtons.getChildren().addAll(addUser, removeUser);
