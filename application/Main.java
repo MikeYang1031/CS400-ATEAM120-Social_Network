@@ -299,7 +299,12 @@ public class Main extends Application {
 				public void handle(ActionEvent event) {
 					File file = new File(ex.getText());
 					if (file.exists()) {
-						network.saveToFile(file);
+						try {
+							network.saveToFile(file);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						infoMessage("saved");
 					}
 				}
@@ -385,7 +390,12 @@ public class Main extends Application {
 					//System.out.print("save pressed");
 					File file = new File(td.getEditor().getText());
 					if (file.exists()) {
-						network.saveToFile(file);
+						try {
+							network.saveToFile(file);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						infoMessage("Successfully saved, goodbye!");
 						//td.showAndWait();
 					}else {
