@@ -24,6 +24,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -66,18 +67,91 @@ public class Main extends Application {
     }
 
     private void setUpTopBox() {
-        // set top menu
-        Button dis = new Button("Display");
-        dis.setMinSize(200, 40);
-        dis.setTranslateX(520);
-        dis.setStyle("-fx-background-color: #FFC000; "
-            + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-        
-        //ArrayList<String> friends = centralUser.getFriends();
-        
-        
+		Button dis = new Button("Display");
+		dis.setMinSize(200, 40);
+		dis.setTranslateY(25);
+		dis.setTranslateX(580);
+		dis.setStyle("-fx-background-color: #FFC000; "
+				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+
+		// pop up new window
+		dis.setOnAction(new EventHandler<ActionEvent>() {
+
+			public void handle(ActionEvent event) {
+				GridPane gridPane = new GridPane();
+				network.setCentral("a");
+				ArrayList<Button> buttons = new ArrayList<Button>();
+				// Label secondLabel = new Label("Friend relationship");
+				reflesh(gridPane);
+
+				BorderPane secondaryLayout = new BorderPane();
+				Scene secondScene = new Scene(gridPane, 800, 600);
+				
+				buttonClose = new Button("Quit");
+				buttonClose.setOnAction(new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent event) {
+						Stage stage = (Stage) buttonClose.getScene().getWindow();// set the button
+						stage.close();// to close the window
+					}
+
+				});
+				
+				secondaryLayout.setStyle("-fx-background-color: #BFBFBF");
+				secondaryLayout.setBottom(buttonClose);
+				// New window
+				Stage newWindow = new Stage();
+				newWindow.setTitle("Friend Relationship");
+				newWindow.setScene(secondScene);
+
+				// Set position of second window, related to primary window.
+//				newWindow.setX(primaryStage.getX());
+//				newWindow.setY(primaryStage.getY());
+
+				newWindow.show();
+
+			}
+
+		});
         
         border.setTop(dis);
+    }
+    
+    private void reflesh(  GridPane gridPane) {
+    	
+    	ArrayList<Button> buttons = new ArrayList<Button>();
+    	Button center = new Button("Center user: " + network.getCentralUser());
+		for (int i = 0; i < network.getCenterFriend(network.getCentralUser()).size(); i++) {
+			Button button = new Button(network.getCenterFriend(network.getCentralUser()).get(i));
+			buttons.add(button);
+		}
+
+		
+		
+		gridPane.add(center, 0, 0, 1, 1);
+		for (int i = 0; i < buttons.size(); i++) {
+			gridPane.add(buttons.get(i), 1, i, 1, 1);
+		}
+
+		
+        gridPane.setStyle("-fx-background-color: #BFBFBF");
+		
+		
+		
+		for (int  i = 0; i < buttons.size(); i++) {
+			final Integer innerMi = new Integer(i);
+			buttons.get(i).setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent event) {
+                	
+              network.setCentral(buttons.get(innerMi).getText());
+              gridPane.getChildren().clear();
+              reflesh(gridPane);
+                	
+                	
+            	}
+
+			});
+		}
+		
     }
 
     private void infoMessage(String message) {
