@@ -489,11 +489,11 @@ public class SocialNetwork implements SocialNetworkADT {
    * 
    * @param file, the name of file in which we want to save the log to 
    */
- @Override
+@Override
   public void saveToFile(File file) {
     try {
         
-      FileWriter fileWriter = new FileWriter("log.txt");
+      FileWriter fileWriter = new FileWriter(file);
       System.out.println(recordOperations.size());
       for (int i = 0; i < recordOperations.size(); i++) {
         String log = recordOperations.get(i);
