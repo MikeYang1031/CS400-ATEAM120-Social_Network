@@ -190,6 +190,14 @@ public class Main extends Application {
         info.setContentText(message);
         info.showAndWait();
     }
+	
+    private void warningMessage(String header, String message) {
+        Alert info = new Alert(AlertType.WARNING);
+        info.setTitle("WARNING");
+        info.setHeaderText(header);
+        info.setContentText(message);
+        info.showAndWait();
+    }
     
     private void setUpLeftBox() {
 
