@@ -528,6 +528,7 @@ public class SocialNetwork implements SocialNetworkADT {
     // clear all the storage DS
     users.clear();
     personList.clear();
+    recordOperations.clear();
     // Default central User 
     centralUser = "None";
   }
