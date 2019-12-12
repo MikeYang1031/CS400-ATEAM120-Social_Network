@@ -69,10 +69,10 @@ public class Main extends Application {
     }
 
     private void setUpTopBox() {
-		Button dis = new Button("Display");
+		Button dis = new Button("Friend Map: visualizer");
 		dis.setMinSize(200, 40);
-		dis.setTranslateY(25);
-		dis.setTranslateX(580);
+		dis.setTranslateY(80);
+		dis.setTranslateX(500);
 		dis.setStyle("-fx-background-color: #FFC000; "
 				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
 
@@ -447,12 +447,7 @@ public class Main extends Application {
             ex.setPrefColumnCount(10);
             ex.setPadding(new Insets(0, 0, 0, 0));
 
-            Button dis = new Button("Display");
-            dis.setMinSize(200, 40);
-            dis.setTranslateY(25);
-            dis.setTranslateX(0);
-            dis.setStyle("-fx-background-color: #FFC000; "
-                + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+          
 
             Button exp = new Button("Export File");
             exp.setMinSize(100, 30);
