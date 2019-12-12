@@ -516,11 +516,12 @@ public class Main extends Application {
             central.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
                     String central = centralUser.getText();
-                   if( network.setCentral(central) == false) {
-                	   infoMessage("User Does not Exist!");
-                   }else {
-                    
-                    infoMessage("Set " + central + " as central user");
+                    if (central != null && !central.isEmpty()) {
+                    	warningMessage("Error", "Please write the name of the central person");
+                    }else if( network.setCentral(central) == false) {
+                 	    warningMessage("Error", "User Does not Exist!");
+                    }else {
+                    	infoMessage("Set " + central + " as central user");
                    }
                 }
             });
