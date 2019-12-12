@@ -44,6 +44,7 @@ public class Main extends Application {
     private SocialNetwork network = new SocialNetwork();
     // Main layout is Border Pane example (top,left,center,right,bottom)
     BorderPane border = new BorderPane();
+    Text info = new Text();
 
 
     Button buttonClose;
@@ -225,7 +226,7 @@ public class Main extends Application {
             r.setPrefHeight(10);
             r.setPrefWidth(200);
             //info TextField
-            Text info = new Text();
+            //Text info = new Text();
             info.setText(network.updateInfo());
             // Textfield 1 for user
             TextField username = new TextField();
@@ -248,12 +249,12 @@ public class Main extends Application {
                     String name = username.getText();
                     if (name != null && !name.isEmpty()) {
                         if (network.addUser(name) == true) {
-                            infoMessage("added a user " + name);
+                            
                         } else {
-                            infoMessage("can not add duplicate name");
+                            warningMessage("Warning","can not add duplicate name");
                         }
                     } else {
-                        infoMessage("not working");
+                        warningMessage("Warning","Add User not working");
                     }
                     info.setText(network.updateInfo());
                 }
@@ -268,11 +269,11 @@ public class Main extends Application {
                         if (network.removeUser(name) == true) {
                             infoMessage("removed user " + name);
                         } else {
-                            infoMessage(name + " does not in the network");
+                            warningMessage("Remove User failed", name + " does not in the network");
 
                         }
                     } else {
-                        infoMessage("not working");
+                        warningMessage("Warning", "Remove user not working");
                     }
                 }
             });
@@ -475,8 +476,9 @@ public class Main extends Application {
                     if (file.exists()) {
                         network.loadFromFile(file);
                         infoMessage("loaded");
+                        info.setText(network.updateInfo());
                     } else {
-                        infoMessage("File doesn't exist: " + ld.getText());
+                        warningMessage("Error", "File doesn't exist: " + ld.getText());
                     }
                 }
             });
