@@ -31,7 +31,13 @@ public class Person {
         FriendShip = new ArrayList<String>();
         list_of_user_friends = new ArrayList<Person>();
     }
-   
+    
+    /*
+     * Default no-argument constructor
+     */
+    public Person() {
+	   
+    }
     /**
      * Initializes a person with given name and friendship
      * 
