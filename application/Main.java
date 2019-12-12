@@ -134,7 +134,16 @@ public class Main extends Application {
 
 		
         gridPane.setStyle("-fx-background-color: #BFBFBF");
-		
+        Button central = new Button("Set Central User");
+        central.setStyle("-fx-background-color: #FFC000; "
+            + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+        TextField centralUser = new TextField();
+        centralUser.setMaxWidth(100);
+        HBox hb = new HBox();
+        hb.getChildren().addAll(centralUser, central);
+        hb.setSpacing(5);
+        hb.setTranslateX(580);
+        gridPane.getChildren().add(hb);
 		
 		
 		for (int  i = 0; i < buttons.size(); i++) {
@@ -144,6 +153,7 @@ public class Main extends Application {
                 	
               network.setCentral(buttons.get(innerMi).getText());
               gridPane.getChildren().clear();
+              
               reflesh(gridPane);
                 	
                 	
@@ -472,17 +482,11 @@ public class Main extends Application {
                     infoMessage("Shortest Path",header,path.toString());
                 }
             });
-
-            Button central = new Button("Set Central User");
-            central.setStyle("-fx-background-color: #FFC000; "
-                + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
-            TextField centralUser = new TextField();
-            centralUser.setMaxWidth(100);
             // Vbox2
             vb2.setSpacing(20);
             vb2.setPadding(new Insets(190, 40, 0, 0));
             vb2.getChildren().addAll(muser,mutual,shortest,
-                shortestPath, centralUser, central, ld, load, ex, exp, r2);
+                shortestPath, ld, load, ex, exp, r2);
             vb2.setTranslateY(25);
             vb2.setAlignment(Pos.TOP_CENTER);
 
