@@ -574,21 +574,23 @@ public class Main extends Application {
                 (Button) td.getDialogPane().lookupButton(saveButtonType);
             save.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
-                    // ok was pressed
-                    // System.out.print("save pressed");
-                    File file = new File(td.getEditor().getText());
-                    if (file.exists()) {
-                        try {
-                            network.saveToFile(file);
-                        } catch (Exception e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
+                    try {
+                        
+                        FileWriter fileWriter = new FileWriter("log.txt");
+                        System.out.println(network.recordOperations.size());
+                        for (int i = 0; i < network.recordOperations.size(); i++) {
+                          String log = network.recordOperations.get(i);
+                          // System.out.println(log);
+                          fileWriter.write(log);
+                          fileWriter.write("\n");
                         }
+                        fileWriter.close();
+                      }
+
+                      catch (Exception e) {
+                        System.out.println("Caution: IOException!");
+                      }
                         infoMessage("Successfully saved, goodbye!");
-                        // td.showAndWait();
-                    } else {
-                        infoMessage("File Doesn't exists, save failed!");
-                    }
                     // Save file
                 }
             });
