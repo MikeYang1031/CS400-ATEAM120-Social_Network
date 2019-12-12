@@ -461,8 +461,7 @@ public class Main extends Application {
                         try {
                             network.saveToFile(file);
                         } catch (Exception e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
+                            warningMessage("Error","Error occured when save");
                         }
                         infoMessage("saved");
                     }
@@ -537,8 +536,7 @@ public class Main extends Application {
             border.setRight(vb2);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	warningMessage("Error","Error");
         }
     }
 
