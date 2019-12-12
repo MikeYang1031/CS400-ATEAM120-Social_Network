@@ -572,8 +572,7 @@ public class Main extends Application {
      */
     @Override
     public void stop() {
-        try {
-        	// exit
+           // infoMessage("Stage is closing");
             ButtonType saveButtonType = new ButtonType("Save", ButtonData.YES);
             ButtonType ENSButtonType =
                 new ButtonType("Exit without Save", ButtonData.NO);
@@ -581,24 +580,27 @@ public class Main extends Application {
             td.setHeaderText("Save the progress?");
             td.getDialogPane().getButtonTypes().set(0, saveButtonType);
             td.getDialogPane().getButtonTypes().set(1, ENSButtonType);
+
             Button save =
                 (Button) td.getDialogPane().lookupButton(saveButtonType);
             save.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
-                    try {                        
-                        FileWriter fileWriter = new FileWriter("log.txt");
-                        System.out.println(network.recordOperations.size());
-                        for (int i = 0; i < network.recordOperations.size(); i++) {
-                        	String log = network.recordOperations.get(i);
-                        	fileWriter.write(log);
-                        	fileWriter.write("\n");
+                    // ok was pressed
+                    // System.out.print("save pressed");
+                    File file = new File(td.getEditor().getText());
+                    if (file.exists()) {
+                        try {
+                            network.saveToFile(file);
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
                         }
-                        fileWriter.close();
-                      }
-                      catch (Exception e) {
-                    	  System.out.println("Caution: IOException!");
-                      }
                         infoMessage("Successfully saved, goodbye!");
+                        // td.showAndWait();
+                    } else {
+                        infoMessage("File Doesn't exists, save failed!");
+                    }
+                    // Save file
                 }
             });
             Button ENS =
