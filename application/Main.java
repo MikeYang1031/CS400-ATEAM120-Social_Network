@@ -1,3 +1,9 @@
+/**
+ * Filename: Main.java 
+ * Project: Social Network 
+ * Authors: ateam120
+ * 
+ */
 package application;
 
 import java.io.File;
@@ -46,60 +52,49 @@ public class Main extends Application {
     // Main layout is Border Pane example (top,left,center,right,bottom)
     BorderPane border = new BorderPane();
     Text info = new Text();
-
-
     Button buttonClose;
-
-
+    
+    /**
+     * Sets background color for the GUI
+     */
     private void setBackgroundColor() {
         border.setStyle("-fx-background-color: #BFBFBF");
     }
 
-    private void setUpBottomBox() {
-        HBox feedback = new HBox();
-        Label feedLabel = new Label("Feedback");
-        TextField feedText = new TextField();
-
-        feedLabel.setStyle("-fx-background-color: #FFC000");
-        feedLabel.setPrefSize(60, 25);
-        feedText.setPrefWidth(750);
-        feedback.setSpacing(10);
-        feedback.getChildren().addAll(feedLabel, feedText);
-        border.setBottom(feedback);
-    }
-
+    /**
+     * Sets up GUI's top part
+     */
     private void setUpTopBox() {
+    	//button initialization
 		Button dis = new Button("Friend Map: visualizer");
 		dis.setMinSize(200, 40);
 		dis.setTranslateY(80);
 		dis.setTranslateX(500);
 		dis.setStyle("-fx-background-color: #FFC000; "
-				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0, 1 );");
 
-		// pop up new window
+		// sets dis button on action
 		dis.setOnAction(new EventHandler<ActionEvent>() {
-
 			public void handle(ActionEvent event) {
+				// pop up new window if dis button is pressed
 				GridPane gridPane = new GridPane();
+				// return error info if press dis without set central user
 				if(network.getCentralUser() == null) {
 					  infoMessage("Please set a central user first."); 
 					  return;
 				  }else {
-				   reflesh(gridPane);
+				   refresh(gridPane);
 				  }
-				ArrayList<Button> buttons = new ArrayList<Button>();
-				// Label secondLabel = new Label("Friend relationship");
-				
+				ArrayList<Button> buttons = new ArrayList<Button>();			
 				BorderPane secondaryLayout = new BorderPane();
 				Scene secondScene = new Scene(gridPane, 800, 600);
-				
+				// close button setting
 				buttonClose = new Button("Quit");
 				buttonClose.setOnAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent event) {
 						Stage stage = (Stage) buttonClose.getScene().getWindow();// set the button
 						stage.close();// to close the window
 					}
-
 				});
 				
 				secondaryLayout.setStyle("-fx-background-color: #BFBFBF");
@@ -108,41 +103,38 @@ public class Main extends Application {
 				Stage newWindow = new Stage();
 				newWindow.setTitle("Friend Relationship");
 				newWindow.setScene(secondScene);
-
-				// Set position of second window, related to primary window.
-//				newWindow.setX(primaryStage.getX());
-//				newWindow.setY(primaryStage.getY());
-
 				newWindow.show();
-
 			}
-
 		});
-        
         border.setTop(dis);
     }
     
-    private void reflesh(  GridPane gridPane) {
-    	
+    /**
+     * Refreshes the gidpane when friend is clicked
+     * 
+     * @param gridPane
+     */
+    private void refresh(GridPane gridPane) {
+    	// display central user
     	ArrayList<Button> buttons = new ArrayList<Button>();
+    	// display central user's friend
     	Button center = new Button("Center user: " + network.getCentralUser());
 		for (int i = 0; i < network.getCenterFriend(network.getCentralUser()).size(); i++) {
 			Button button = new Button(network.getCenterFriend(network.getCentralUser()).get(i));
 			buttons.add(button);
 		}
-
 		Label lable = new Label("Friend(s): ");
 		gridPane.add(lable, 1, 0);
 		gridPane.add(center, 0, 0, 1, 1);
 		for (int i = 0; i < buttons.size(); i++) {
 			gridPane.add(buttons.get(i), 2, i, 1, 1);
 		}
-
-		
+		// gridPane setting
         gridPane.setStyle("-fx-background-color: #BFBFBF");
         Button central = new Button("Set Central User");
         central.setStyle("-fx-background-color: #FFC000; "
             + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+        // set central user
         TextField centralUser = new TextField();
         centralUser.setMaxWidth(100);
         central.setOnAction(new EventHandler<ActionEvent>() {
@@ -151,38 +143,36 @@ public class Main extends Application {
                 if( network.setCentral(central) == false) {
              	   infoMessage("User Does not Exist!");
                 }else {
-                 
                  infoMessage("Set " + central + " as central user");
                 }
                 gridPane.getChildren().clear();
-                reflesh(gridPane);
+                refresh(gridPane);
             }
         });
+        
         HBox hb = new HBox();
         hb.getChildren().addAll(centralUser, central);
         hb.setSpacing(5);
         hb.setTranslateX(580);
         gridPane.getChildren().addAll(hb);
-		
-		
+		// make friends clickable
 		for (int  i = 0; i < buttons.size(); i++) {
 			final Integer innerMi = new Integer(i);
 			buttons.get(i).setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
-                	
-              network.setCentral(buttons.get(innerMi).getText());
-              gridPane.getChildren().clear();
-              
-              reflesh(gridPane);
-                	
-                	
+                	network.setCentral(buttons.get(innerMi).getText());
+                	gridPane.getChildren().clear();
+                	refresh(gridPane);	
             	}
-
 			});
 		}
-		
     }
-
+    
+    /**
+     * Sets up information pop-up window
+     * 
+     * @param message information for user
+     */
     private void infoMessage(String message) {
         Alert info = new Alert(AlertType.INFORMATION);
         info.setTitle("Message");
@@ -190,6 +180,13 @@ public class Main extends Application {
         info.showAndWait();
     }
 
+    /**
+     * Sets up information pop-up window
+     * 
+     * @param title title of pop-up window
+     * @param header header of pop-up window
+     * @param message information for user
+     */
     private void infoMessage(String title,String header, String message) {
         Alert info = new Alert(AlertType.INFORMATION);
         info.setTitle(title);
@@ -197,6 +194,13 @@ public class Main extends Application {
         info.setContentText(message);
         info.showAndWait();
     }
+    
+    /**
+     * Sets up warning message pop-up window
+     * 
+     * @param header header of the pop-up window
+     * @param message for user
+     */
     private void warningMessage(String header, String message) { 
     	 Alert info = new Alert(AlertType.WARNING); 
     	 info.setTitle("WARNING"); 
@@ -205,33 +209,27 @@ public class Main extends Application {
     	 info.showAndWait(); 
     	 } 
     
+    /**
+     * Sets up GUI's left part
+     */
     private void setUpLeftBox() {
-
         try {
             VBox left = new VBox();
             VBox vb = new VBox();
-
-//            Text topT = new Text("Network consists of: " + socialNetwork.getGraph().order()
-//                + " Users, " + socialNetwork.getGraph().size() + " friendships, and " 
-//                + socialNetwork.getGraph().numberOfGroups()+" connected groups.\n");
-//            
+            // social network image
             FileInputStream inputImage = null;
-
             inputImage = new FileInputStream("ATEAM.png");
-
             Image image = new Image(inputImage);
             ImageView imageView = new ImageView(image);
-
             imageView.setFitHeight(120);
             imageView.setFitWidth(400);
             Label user = new Label("User: ");
-
             // Empty space
             Region r = new Region();
             r.setPrefHeight(10);
             r.setPrefWidth(200);
-            //info TextField
-            //Text info = new Text();
+            // info TextField
+            // Text info = new Text();
             info.setText(network.updateInfo());
             // Textfield 1 for user
             TextField username = new TextField();
@@ -246,6 +244,7 @@ public class Main extends Application {
             // HBox containing all buttons about user
             HBox userButtons = new HBox();
             userButtons.setSpacing(5);
+            // add user
             Button addUser = new Button("Add User");
             addUser.setStyle("-fx-background-color: #FFC000; "
                 + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
@@ -254,7 +253,6 @@ public class Main extends Application {
                     String name = username.getText();
                     if (name != null && !name.isEmpty()) {
                         if (network.addUser(name) == true) {
-                            
                         } else {
                             warningMessage("Warning","can not add duplicate name");
                         }
@@ -264,6 +262,7 @@ public class Main extends Application {
                     info.setText(network.updateInfo());
                 }
             });
+            // remove user
             Button removeUser = new Button("Remove User");
             removeUser.setStyle("-fx-background-color: #FFC000; "
                 + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
@@ -297,9 +296,6 @@ public class Main extends Application {
             friend1.setPrefWidth(150);
             friend1.setPrefColumnCount(10);
             friend1.setPadding(new Insets(0, 0, 0, 0));
-            // Label user1 = new Label("user1: ");
-            // HBox u1 = new HBox();
-            // u1.getChildren().addAll(user1, t2);
             Label rela = new Label("Relationship: ");
             VBox vt2 = new VBox();
             vt2.getChildren().addAll(rela, friend1);
@@ -315,7 +311,7 @@ public class Main extends Application {
             imageView2.setFitWidth(50);
             VBox friendshipButtons = new VBox(); // Vbox to contain all button about friendship
             friendshipButtons.setSpacing(5);
-
+            // add friendship
             Button addFriendship = new Button("Add Friendship");
             addFriendship.setStyle("-fx-background-color: #FFC000; "
                 + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
@@ -375,14 +371,12 @@ public class Main extends Application {
 				}
             	
             });
-            
             // Vbox
             vb.setSpacing(20);
             vb.setPadding(new Insets(0, 0, 0, 50));
             vb.getChildren().addAll(r, vt1, userButtons, r3, vt2, friendship,
                 friend2, removeAll);
             vb.setAlignment(Pos.CENTER);
-
             // bigger left VBox
             left.setSpacing(5);
             left.getChildren().addAll(imageView,info, vb);
@@ -390,25 +384,25 @@ public class Main extends Application {
 
             border.setLeft(left);
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Sets up GUI's right part
+     * 
+     * @param primaryStage
+     */
     private void setUpRightBox(Stage primaryStage) {
         try {
             VBox vb2 = new VBox();
-            
+            // mutual friends
             HBox muser = new HBox();
             muser.setSpacing(5);
             TextField muser1 = new TextField();
             TextField muser2 = new TextField();
-            //user1.setMaxWidth(100);
-            //user2.setMaxWidth(100);
             muser.getChildren().addAll(muser1, muser2);
-
             Button mutual = new Button("List Mutual Friends");
-
             mutual.setStyle("-fx-background-color: #FFC000; "
                 + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
             mutual.setAlignment(Pos.CENTER_RIGHT);
@@ -446,9 +440,8 @@ public class Main extends Application {
             ex.setPrefWidth(300);
             ex.setPrefColumnCount(10);
             ex.setPadding(new Insets(0, 0, 0, 0));
-
-          
-
+            
+            // export file
             Button exp = new Button("Export File");
             exp.setMinSize(100, 30);
             exp.setTranslateY(0);
@@ -473,7 +466,7 @@ public class Main extends Application {
                     }
                 }
             });
-
+            // load file
             Button load = new Button("Load File");
             load.setMinSize(100, 30);
             load.setTranslateY(0);
@@ -499,6 +492,7 @@ public class Main extends Application {
                     }
                 }
             });
+            // shortest path
             Button shortestPath = new Button("Show Shortest Path");
 
             shortestPath.setStyle("-fx-background-color: #FFC000; "
@@ -508,8 +502,6 @@ public class Main extends Application {
             shortest.setSpacing(5);
             TextField user1 = new TextField();
             TextField user2 = new TextField();
-            //user1.setMaxWidth(100);
-            //user2.setMaxWidth(100);
             shortest.getChildren().addAll(user1, user2);
             shortestPath.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
@@ -525,6 +517,7 @@ public class Main extends Application {
                     }
                 }
             });
+            // set central user
             Button central = new Button("Set Central User");
             central.setStyle("-fx-background-color: #FFC000; "
                 + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
@@ -554,7 +547,10 @@ public class Main extends Application {
         	warningMessage("Error","Error");
         }
     }
-
+    
+    /**
+     * The main entry point for all JavaFX applications
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         setBackgroundColor();
@@ -562,7 +558,6 @@ public class Main extends Application {
         setUpRightBox(primaryStage);
         setUpTopBox();
         // Add the vertical box to the center of the root pane
-        // root.setCenter(vbox);
         Scene mainScene = new Scene(border, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         // Add the stuff and set the primary stage
@@ -570,60 +565,57 @@ public class Main extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }
-
+    
+    /**
+     * This method is called when the application should stop, and provides 
+     * a convenient place to prepare for application exit and destroy resources
+     */
     @Override
     public void stop() {
         try {
-            // infoMessage("Stage is closing");
+        	// exit
             ButtonType saveButtonType = new ButtonType("Save", ButtonData.YES);
             ButtonType ENSButtonType =
                 new ButtonType("Exit without Save", ButtonData.NO);
             TextInputDialog td = new TextInputDialog("File name or path");
             td.setHeaderText("Save the progress?");
-           
-	    td.getDialogPane().getButtonTypes().set(0, saveButtonType);
+            td.getDialogPane().getButtonTypes().set(0, saveButtonType);
             td.getDialogPane().getButtonTypes().set(1, ENSButtonType);
-
             Button save =
                 (Button) td.getDialogPane().lookupButton(saveButtonType);
             save.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
-                    try {
-                        
+                    try {                        
                         FileWriter fileWriter = new FileWriter("log.txt");
                         System.out.println(network.recordOperations.size());
                         for (int i = 0; i < network.recordOperations.size(); i++) {
-                          String log = network.recordOperations.get(i);
-                          // System.out.println(log);
-                          fileWriter.write(log);
-                          fileWriter.write("\n");
+                        	String log = network.recordOperations.get(i);
+                        	fileWriter.write(log);
+                        	fileWriter.write("\n");
                         }
                         fileWriter.close();
                       }
-
                       catch (Exception e) {
-                        System.out.println("Caution: IOException!");
+                    	  System.out.println("Caution: IOException!");
                       }
                         infoMessage("Successfully saved, goodbye!");
-                    // Save file
                 }
             });
             Button ENS =
                 (Button) td.getDialogPane().lookupButton(ENSButtonType);
             ENS.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
-                    // System.out.println("cancel might have been pressed");
                     infoMessage("Quitting, goodbye!");
                 }
             });
             td.showAndWait();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     /**
+     * Launches the application
      * @param args
      */
     public static void main(String[] args) {
