@@ -611,10 +611,7 @@ public class Main extends Application {
                 }
             });
             td.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+        } 
 
     /**
      * Launches the application
