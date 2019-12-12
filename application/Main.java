@@ -81,7 +81,7 @@ public class Main extends Application {
 				GridPane gridPane = new GridPane();
 				if(network.getCentralUser() == null) {
 					  infoMessage("Please set a central user first."); 
-					  
+					  return;
 				  }else {
 				   reflesh(gridPane);
 				  }
@@ -148,6 +148,7 @@ public class Main extends Application {
                 String central = centralUser.getText();
                 network.setCentral(central);
                 infoMessage("Set " + central + " as central user");
+                gridPane.getChildren().clear();
                 reflesh(gridPane);
             }
         });
@@ -190,14 +191,13 @@ public class Main extends Application {
         info.setContentText(message);
         info.showAndWait();
     }
-	
-    private void warningMessage(String header, String message) {
-        Alert info = new Alert(AlertType.WARNING);
-        info.setTitle("WARNING");
-        info.setHeaderText(header);
-        info.setContentText(message);
-        info.showAndWait();
-    }
+    private void warningMessage(String header, String message) { 
+    	 Alert info = new Alert(AlertType.WARNING); 
+    	 info.setTitle("WARNING"); 
+    	 info.setHeaderText(header); 
+    	 info.setContentText(message); 
+    	 info.showAndWait(); 
+    	 } 
     
     private void setUpLeftBox() {
 
@@ -510,8 +510,12 @@ public class Main extends Application {
             central.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
                     String central = centralUser.getText();
-                    network.setCentral(central);
+                   if( network.setCentral(central) == false) {
+                	   infoMessage("User Does not Exist!");
+                   }else {
+                    
                     infoMessage("Set " + central + " as central user");
+                   }
                 }
             });
             // Vbox2
