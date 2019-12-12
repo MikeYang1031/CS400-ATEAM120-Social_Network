@@ -131,11 +131,11 @@ public class Main extends Application {
 			buttons.add(button);
 		}
 
-		
-		
+		Label lable = new Label("Friend(s): ");
+		gridPane.add(lable, 1, 0);
 		gridPane.add(center, 0, 0, 1, 1);
 		for (int i = 0; i < buttons.size(); i++) {
-			gridPane.add(buttons.get(i), 1, i, 1, 1);
+			gridPane.add(buttons.get(i), 2, i, 1, 1);
 		}
 
 		
@@ -580,28 +580,31 @@ public class Main extends Application {
                 new ButtonType("Exit without Save", ButtonData.NO);
             TextInputDialog td = new TextInputDialog("File name or path");
             td.setHeaderText("Save the progress?");
-            td.getDialogPane().getButtonTypes().set(0, saveButtonType);
+           
+	    td.getDialogPane().getButtonTypes().set(0, saveButtonType);
             td.getDialogPane().getButtonTypes().set(1, ENSButtonType);
 
             Button save =
                 (Button) td.getDialogPane().lookupButton(saveButtonType);
             save.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
-                    // ok was pressed
-                    // System.out.print("save pressed");
-                    File file = new File(td.getEditor().getText());
-                    if (file.exists()) {
-                        try {
-                            network.saveToFile(file);
-                        } catch (Exception e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
+                    try {
+                        
+                        FileWriter fileWriter = new FileWriter("log.txt");
+                        System.out.println(network.recordOperations.size());
+                        for (int i = 0; i < network.recordOperations.size(); i++) {
+                          String log = network.recordOperations.get(i);
+                          // System.out.println(log);
+                          fileWriter.write(log);
+                          fileWriter.write("\n");
                         }
+                        fileWriter.close();
+                      }
+
+                      catch (Exception e) {
+                        System.out.println("Caution: IOException!");
+                      }
                         infoMessage("Successfully saved, goodbye!");
-                        // td.showAndWait();
-                    } else {
-                        infoMessage("File Doesn't exists, save failed!");
-                    }
                     // Save file
                 }
             });
