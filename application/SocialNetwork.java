@@ -417,13 +417,15 @@ public class SocialNetwork implements SocialNetworkADT {
    * @param centralUser, the string in which we wanted to set as central user
    */
   @Override
-  public void setCentral(String setUser) {
+  public boolean setCentral(String setUser) {
     if (!users.contains(setUser)) {
       System.out.println("User not exist");
+      return false;
     }
     centralUser = setUser;
     System.out.println(centralUser);
     recordOperations.add("s " + setUser);
+    return true;
   }
 
   public ArrayList<String> getCenterFriend(String center) {
