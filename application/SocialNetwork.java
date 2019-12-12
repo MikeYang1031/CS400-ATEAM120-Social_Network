@@ -46,7 +46,7 @@ public class SocialNetwork implements SocialNetworkADT {
   }
 
   // record every operation made by user
-  private ArrayList<String> recordOperations;
+  public ArrayList<String> recordOperations;
 
   /**
    * This method return a string containing the status of a social network
