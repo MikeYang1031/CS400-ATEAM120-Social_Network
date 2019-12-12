@@ -147,8 +147,12 @@ public class Main extends Application {
         central.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 String central = centralUser.getText();
-                network.setCentral(central);
-                infoMessage("Set " + central + " as central user");
+                if( network.setCentral(central) == false) {
+             	   infoMessage("User Does not Exist!");
+                }else {
+                 
+                 infoMessage("Set " + central + " as central user");
+                }
                 gridPane.getChildren().clear();
                 reflesh(gridPane);
             }
