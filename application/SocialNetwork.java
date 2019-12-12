@@ -501,7 +501,7 @@ public class SocialNetwork implements SocialNetworkADT {
   public void saveToFile(File file) {
     try {
         
-      FileWriter fileWriter = new FileWriter("log.txt");
+      FileWriter fileWriter = new FileWriter(file);
       System.out.println(recordOperations.size());
       for (int i = 0; i < recordOperations.size(); i++) {
         String log = recordOperations.get(i);
