@@ -1,3 +1,9 @@
+/**
+ * Filename: Graph.java 
+ * Project: Social Network 
+ * Authors: ateam120
+ * 
+ */
 package application;
 
 import java.util.ArrayList;
@@ -12,7 +18,11 @@ public class Person {
     int totalWeight;
     List<Person> list_of_user_friends; 
     
-    
+    /**
+     * Initializes a person with given name
+     * 
+     * @param name person's name
+     */
     public Person(String name) {
         this.name = name;
         this.weight = 1; // each person has a weight of 1
@@ -22,57 +32,61 @@ public class Person {
         list_of_user_friends = new ArrayList<Person>();
     }
    
-    
+    /**
+     * Initializes a person with given name and friendship
+     * 
+     * @param name person's name
+     * @param FriendShip person's friendship
+     */
     public Person(String name, ArrayList<String> FriendShip) {
         this.name = name;
         this.FriendShip = FriendShip;
         list_of_user_friends = new ArrayList<Person>();
     }
     
-    public Person() {
-        
-    }
-
-
+    /**
+     * Returns the name of the person
+     * 
+     * @return the name of the person
+     */
     public String getName() {
         return this.name;
     }
     
+    /**
+     * Returns the person's friendship
+     * 
+     * @return person's friendship
+     */
     public ArrayList<String> getFriendShip() {
         return this.FriendShip;
     }
     
+    /**
+     * Sets the person's name
+     * 
+     * @param name name of the person
+     */
     public void setName(String name) {
         this.name = name;
     }
- 
-//    public void setFriendShip(String[] FriendShip) {
-//        this.FriendShip = FriendShip;
-//    }  
+    /**
+     * Adds a new friendship for given person
+     * 
+     * @param friend name of a friend
+     * @param person5 person to add new friend
+     */
     public void addFriendShip(String friend, Person person5) {
          FriendShip.add(friend);
          list_of_user_friends.add(person5);
     }  
-
+    
+    /**
+     * Returns the list of person's friends
+     * 
+     * @return the list of person's friends
+     */
     public List<Person> getListOfUsersFriends() {
         return this.list_of_user_friends;
     }
-    
-//    /**
-//     * Sets users center position to true or false to determine if user is in center position
-//     * @param isUserCenter
-//     */
-//    public void setUserCenter(boolean isUserCenter) {
-//        this.is_User_Center = isUserCenter;
-//    }
-//    
-//    /**
-//     * Returns true or false to determine if a user is in the center position
-//     * @return is_User_Center
-//     */
-//    public boolean getUserCenter() {
-//        return this.is_User_Center;
-//    }
-
-
 }
