@@ -27,10 +27,11 @@ public class SocialNetwork implements SocialNetworkADT {
   private ArrayList<Person> personList;
   private String centralUser;
   private Queue<Person> queue;
+  private int numFriendship;
 
   /**
-   * Constructor that creates the graph instance and complete initialization
-   * of the variables defined above.
+   * Constructor that creates the graph instance and complete initialization of the variables
+   * defined above.
    * 
    */
   public SocialNetwork() {
@@ -40,6 +41,7 @@ public class SocialNetwork implements SocialNetworkADT {
     personList = new ArrayList<Person>();
     users = new ArrayList<String>();
     centralUser = null;
+    numFriendship = graph.size();
 
   }
 
@@ -47,10 +49,10 @@ public class SocialNetwork implements SocialNetworkADT {
   private ArrayList<String> recordOperations;
 
   /**
-   * This method return a string containing the status of a social network 
+   * This method return a string containing the status of a social network
    * 
-   * @return info, info of a social network containing the number of users, number
-   * of friendships, and number of groups.
+   * @return info, info of a social network containing the number of users, number of friendships,
+   *         and number of groups.
    * 
    */
   public String updateInfo() {
@@ -62,17 +64,17 @@ public class SocialNetwork implements SocialNetworkADT {
   /**
    * Returns a boolean value indicating if friendship is added successfully
    * 
-   * @param person1 person2, names of users to be added 
+   * @param person1 person2, names of users to be added
    * @return true if friendship is added successfully, false otherwise
    */
   @Override
   public boolean addFriends(String person1, String person2) {
-    // first check if person1 and person2 are null, they should not 
+    // first check if person1 and person2 are null, they should not
     // be null
     if (person1 == null || person2 == null) {
       return false;
     }
-    // if person1 is not in the user arrayList, then add it 
+    // if person1 is not in the user arrayList, then add it
     if (!users.contains(person1)) {
       addUser(person1);
     }
@@ -80,11 +82,11 @@ public class SocialNetwork implements SocialNetworkADT {
     if (!users.contains(person2)) {
       addUser(person2);
     }
-    // create new person objects 
+    // create new person objects
     Person personone = new Person();
     Person persontwo = new Person();
-    
-    // assigning names for the new person objects 
+
+    // assigning names for the new person objects
     for (int i = 0; i < personList.size(); i++) {
       if (personList.get(i).getName().equals(person1)) {
         personone = personList.get(i);
@@ -96,7 +98,7 @@ public class SocialNetwork implements SocialNetworkADT {
     personone.addFriendShip(person2, persontwo);
     persontwo.addFriendShip(person1, personone);
 
-    // add the edge between the two persons 
+    // add the edge between the two persons
     graph.addEdge(person1, person2);
     // record the operation in the loog
     recordOperations.add("a " + person1 + " " + person2);
@@ -106,7 +108,7 @@ public class SocialNetwork implements SocialNetworkADT {
   /**
    * Returns a boolean value indicating if friendship is removed successfully
    * 
-   * @param person1 person2, name of the users to be removed 
+   * @param person1 person2, name of the users to be removed
    * @return true if friendship is removed successfully, false otherwise
    */
   @Override
@@ -115,15 +117,14 @@ public class SocialNetwork implements SocialNetworkADT {
     if (!graph.getAdjacentVerticesOf(person1).contains(person2)) {
       return false;
     }
-    // otherwise, remove edge between these two persons 
+    // otherwise, remove edge between these two persons
     graph.removeEdge(person1, person2);
     recordOperations.add("r " + person1 + " " + person2);
     return true;
   }
 
   /**
-   * Returns a boolean value indicating if user(vertex) is added successfully
-   * to the graph
+   * Returns a boolean value indicating if user(vertex) is added successfully to the graph
    * 
    * @param person, name of user to be added
    * @return true if user is added successfully, false otherwise
@@ -149,8 +150,7 @@ public class SocialNetwork implements SocialNetworkADT {
   }
 
   /**
-   * Returns a boolean value indicating if user(vertex) is removed successfully
-   * from the graph
+   * Returns a boolean value indicating if user(vertex) is removed successfully from the graph
    * 
    * @param person, user to be removed from the graph
    * @return true if user is removed successfully, false otherwise
@@ -170,40 +170,45 @@ public class SocialNetwork implements SocialNetworkADT {
   /**
    * Returns a set containing all the friends of a certain user
    * 
-   * @param person, user whom 
+   * @param person, user whom we want to get all friends from
    * @return a set containing Person type
    */
   @Override
   public Set<Person> getFriends(String person) {
-
-
-
+    // store all the person's friends
     List<String> friendsList = graph.getAdjacentVerticesOf(person);
+    // declare a new set
     Set<Person> friendSet = new HashSet<Person>();
-
+    //
     for (String friend : friendsList) {
       // friendSet.add(friend);
     }
     return friendSet;
   }
 
+  /**
+   * Returns a set containing the mutual friend between two users
+   * 
+   * @param person1 person2, persons whom we need to find common friends
+   * @return a set containing String type
+   */
   @Override
   public Set<String> getMutualFriends(String person1, String person2) {
-
-
-
+    // store all the friends of person1 and person2 into list
+    // and compare the two lists to find common vertices
     List<String> friend1 = graph.getAdjacentVerticesOf(person1);
     System.out.println(friend1);
     List<String> friend2 = graph.getAdjacentVerticesOf(person2);
     System.out.println(friend2);
+    // two lists should not be null
     if (friend1 == null || friend2 == null) {
       return null;
     }
+    // declare a new set
     Set<String> mFriend = new HashSet<String>();
-
+    // put common friends to the set
     for (int i = 0; i < friend1.size(); i++) {
       for (int j = 0; j < friend2.size(); j++) {
-
         if (friend1.get(i).equals(friend2.get(j))) {
           mFriend.add(friend1.get(i));
         }
@@ -212,24 +217,30 @@ public class SocialNetwork implements SocialNetworkADT {
     return mFriend;
   }
 
+  /**
+   * Returns a list containing the shortest path from person1 to person2 in the graph
+   * 
+   * @param person1 person2, find the shortest path between these two persons
+   * @return a List containing the vertices visited on the shortest path
+   */
   @Override
   public List<String> getShortestPath(String person1, String person2) {
     if (users.contains(person1) && users.contains(person2)) {
-
+      // if the userList doesn't contain two users, the return null
     } else {
       return null;
     }
+    // mark each vertices as unvisited first
     for (int i = 0; i < personList.size(); i++) {
       personList.get(i).visited = false;
     }
+    // declare new person objects
     Person Person1 = personList.get(users.indexOf(person1));
     Person Person2 = personList.get(users.indexOf(person2));
-
-
+    // use Dijkstra's algo to find the shortest path
     try {
       tempStore = findPathAlgorithm(Person1, Person2);
     } catch (Exception e) {
-
       e.printStackTrace();
     }
     return tempStore;
@@ -327,17 +338,24 @@ public class SocialNetwork implements SocialNetworkADT {
     }
   }
 
-  // This class serves to get the number of disconnected groups in the network
+  /**
+   * Returns the number of un-connected groups in the network
+   * 
+   * @return a int of number of un-connected group
+   */
   @Override
   public int getConnectedComponents() {
-
     int groupNum = 0;
+    // declare a arraylist of type string
     ArrayList<String> visitedVertices = new ArrayList<String>();
+    // get all users of the graph and store them in a List
     List<String> allNetWorkUsers = getAllUsers();
     if (graph.order() > 0) {
+      // for each user in the graph
       for (String user : graph.getAllVertices()) {
-
+        // if the arrayList doesn't contain user
         if (!visitedVertices.contains(user)) {
+          // then use DFS algo to find the number of groups 
           connectedCalculator(user, visitedVertices);
           groupNum++;
         }
@@ -346,10 +364,19 @@ public class SocialNetwork implements SocialNetworkADT {
     return groupNum;
   }
 
+  /**
+   * DFS algo to find the number of groups 
+   * 
+   * @param user, user's name. visitedVertices, a arrayList
+   */
   private void connectedCalculator(String user, ArrayList<String> visitedVertices) {
+    // add the user to the visited arrayList 
     visitedVertices.add(user);
+    // get all friends of user and for each friend
     for (String userName : graph.getAdjacentVerticesOf(user)) {
+      // if the visited arrayList doesn't contain the friend
       if (!visitedVertices.contains(userName)) {
+        // recursive call DFS 
         this.connectedCalculator(userName, visitedVertices);
       }
     }
@@ -357,10 +384,13 @@ public class SocialNetwork implements SocialNetworkADT {
   }
 
 
-  // this is a private user class to get all the user in the graph and
-  // then store them in the list
+  /**
+   * Helper method to get all users of tbe graph 
+   * 
+   * @return a list of all user as type string
+   */
   private List<String> getAllUsers() {
-
+    
     Set<String> allUserSet = graph.getAllVertices();
     ArrayList<String> usersList = new ArrayList<String>();
 
@@ -370,11 +400,22 @@ public class SocialNetwork implements SocialNetworkADT {
     return usersList;
   }
 
+  /**
+   * Return the central user 
+   * 
+   * @return a string as the central user 
+   * 
+   */
   @Override
   public String getCentralUser() {
     return centralUser;
   }
 
+  /**
+   * setting the central user 
+   * 
+   * @param centralUser, the string in which we wanted to set as central user
+   */
   @Override
   public void setCentral(String setUser) {
     if (!users.contains(setUser)) {
@@ -392,6 +433,11 @@ public class SocialNetwork implements SocialNetworkADT {
 
   }
 
+  /**
+   * Update the current social network with the information in the file to be loaded
+   * 
+   * @param file, the name of the file to be loaded
+   */
   @Override
   public void loadFromFile(File file) {
     try {
@@ -436,6 +482,11 @@ public class SocialNetwork implements SocialNetworkADT {
     }
   }
 
+  /**
+   * Saving the log data (recordOperation) to a the specified file 
+   * 
+   * @param file, the name of file in which we want to save the log to 
+   */
   @Override
   public void saveToFile(File file) {
     try {
@@ -456,10 +507,25 @@ public class SocialNetwork implements SocialNetworkADT {
 
   }
 
+  /**
+   * removing all the vertices and edges from the graph 
+   * 
+   */
   public void removeAll() {
-    // graph = new Graph();
-    // recordOperations = new ArrayList<String>();
-    // personList = new ArrayList<Person>();
-    // users = new ArrayList<String>();
+    // remove all the edges 
+    for (String user : graph.getAllVertices()) {
+      for (String userFriend : graph.getAdjacentVerticesOf(user)) {
+        graph.removeEdge(user, userFriend);
+      }
+    }
+    // remove all the vertices
+    for (String userVertex : graph.getAllVertices()) {
+      graph.removeVertex(userVertex);
+    }
+    // clear all the storage DS
+    users.clear();
+    personList.clear();
+    // Default central User 
+    centralUser = "None";
   }
 }
