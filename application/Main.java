@@ -272,6 +272,7 @@ public class Main extends Application {
                     if (name != null && !name.isEmpty()) {
                         if (network.removeUser(name) == true) {
                             infoMessage("removed user " + name);
+			    info.setText(network.updateInfo());
                         } else {
                             warningMessage("Remove User failed", name + " does not in the network");
 
