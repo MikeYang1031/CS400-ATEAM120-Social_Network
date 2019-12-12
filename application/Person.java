@@ -1,5 +1,5 @@
 /**
- * Filename: Graph.java 
+ * Filename: Person.java 
  * Project: Social Network 
  * Authors: ateam120
  * 
