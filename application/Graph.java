@@ -1,3 +1,11 @@
+/**
+ * Filename: Graph.java 
+ * Project: Social Network 
+ * Authors: ateam120
+ * 
+ * Directed and unweighted graph implementation
+ */
+
 package application;
 
 
@@ -6,12 +14,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-/**
- * Filename: Graph.java Project: p4 Authors: Jarvis Jia
- * 
- * Directed and unweighted graph implementation
- */
 
 public class Graph implements GraphADT {
 
@@ -49,7 +51,6 @@ public class Graph implements GraphADT {
             vertexList.add(person);// add vertex
             vertexNumber++;// vertex number increase
         }
-
     }
 
     /**
@@ -66,7 +67,6 @@ public class Graph implements GraphADT {
             return;
         } else {
             // useless
-//
             for (int i = 0; i < adjList.get(person).size(); i++) {
                 adjList.get(person).remove(i);// delete the vertex's relation
                 edgeNumber--;// delete edge number
@@ -81,11 +81,9 @@ public class Graph implements GraphADT {
                     edgeNumber--;
                 }
             }
-
             adjList.remove(person); // remove edges
             vertexList.remove(person);// remove vertex
             vertexNumber--;// delete vertex number
-
         }
     }
 
@@ -120,7 +118,6 @@ public class Graph implements GraphADT {
                 addVertex(person1);// add the vertex1 if vertex1 is not in the graph
                 addEdge(person1, person2);// recursive call to add the edge
             }
-
         }
     }
 
@@ -194,7 +191,6 @@ public class Graph implements GraphADT {
     }
 
     public List<String> getVertexList() {
-        // TODO Auto-generated method stub
         return vertexList;
     }
 }
