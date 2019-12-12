@@ -3,9 +3,9 @@ package application;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.io.FileWriter;
 import java.util.List;
 import java.util.Set;
 import javafx.application.Application;
@@ -259,7 +259,7 @@ public class Main extends Application {
                             warningMessage("Warning","can not add duplicate name");
                         }
                     } else {
-                        warningMessage("Warning","Add User not working");
+                        warningMessage("Warning","Write names in order to add user");
                     }
                     info.setText(network.updateInfo());
                 }
@@ -414,11 +414,16 @@ public class Main extends Application {
             mutual.setAlignment(Pos.CENTER_RIGHT);
             mutual.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
-                    String f1 = muser1.getText();
+                	String f1 = muser1.getText();
                     String f2 = muser2.getText();
                     Set<String> mFriend = new HashSet<String>();
-                    mFriend = network.getMutualFriends(f1, f2);
-                    infoMessage("Mutual Friends","Mutual Friends:",mFriend.toString());
+                	if (f1 != null && !f1.isEmpty() && f2 != null && !f2.isEmpty()) {
+                		mFriend = network.getMutualFriends(f1, f2);
+                        infoMessage("Mutual Friends","Mutual Friends:",mFriend.toString());
+                    } else {
+                        warningMessage("Warning","Fill in the names to find our their mutual friends");
+                    }
+                    
                 }
             });
             
@@ -457,14 +462,19 @@ public class Main extends Application {
                 + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
             exp.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
-                    File file = new File(ex.getText());
-                    if (file.exists()) {
-                        try {
-                            network.saveToFile(file);
-                        } catch (Exception e) {
-                            warningMessage("Error","Error occured when save");
+                	String s1 = ex.getText();
+                    if (s1 != null && !s1.isEmpty()) {
+                    	File file = new File(s1);
+                    	if (file.exists()) {
+                            try {
+                                network.saveToFile(file);
+                                infoMessage("saved");
+                            } catch (Exception e) {
+                                warningMessage("Error","Error occured when save");
+                            }
                         }
-                        infoMessage("saved");
+                    }  else {
+                        warningMessage("Error", "File doesn't exist or need to be written" + s1);
                     }
                 }
             });
@@ -477,13 +487,20 @@ public class Main extends Application {
                 + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
             load.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
-                    File file = new File(ld.getText());
-                    if (file.exists()) {
-                        network.loadFromFile(file);
-                        infoMessage("loaded");
-                        info.setText(network.updateInfo());
+                	String s2 = ld.getText();
+                    if (s2 != null && !s2.isEmpty()) {
+                    	File file = new File(s2);
+                    	if (file.exists()) {
+                            try {
+                            	network.loadFromFile(file);
+                                infoMessage("loaded");
+                                info.setText(network.updateInfo());
+                            } catch (Exception e) {
+                                warningMessage("Error","Error occured when save");
+                            }
+                        }
                     } else {
-                        warningMessage("Error", "File doesn't exist: " + ld.getText());
+                        warningMessage("Error", "File doesn't exist or need to be written" + s2);
                     }
                 }
             });
@@ -503,10 +520,14 @@ public class Main extends Application {
                 public void handle(ActionEvent event) {
                     String f1 = user1.getText();
                     String f2 = user2.getText();
-                    List<String> path = new ArrayList<String>();
-                    path = network.getShortestPath(f1, f2);
-                    String header = "Shortest Path between "+f1+" and "+f2+":";
-                    infoMessage("Shortest Path",header,path.toString());
+                    if (f1 != null && !f1.isEmpty() && f2 != null && !f2.isEmpty()) {
+	                    List<String> path = new ArrayList<String>();
+	                    path = network.getShortestPath(f1, f2);
+	                    String header = "Shortest Path between "+f1+" and "+f2+":";
+	                    infoMessage("Shortest Path",header,path.toString());
+                    } else {
+                        warningMessage("Error", "Fill in the names to obtain the shortest path");
+                    }
                 }
             });
             Button central = new Button("Set Central User");
@@ -517,9 +538,7 @@ public class Main extends Application {
             central.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
                     String central = centralUser.getText();
-                    if (central != null && !central.isEmpty()) {
-                    	warningMessage("Error", "Please write the name of the central person");
-                    }else if( network.setCentral(central) == false) {
+                    if( network.setCentral(central) == false) {
                  	    warningMessage("Error", "User Does not Exist!");
                     }else {
                     	infoMessage("Set " + central + " as central user");
