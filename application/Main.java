@@ -79,11 +79,15 @@ public class Main extends Application {
 
 			public void handle(ActionEvent event) {
 				GridPane gridPane = new GridPane();
-				network.setCentral("a");
+				if(network.getCentralUser() == null) {
+					  infoMessage("Please set a central user first."); 
+					  
+				  }else {
+				   reflesh(gridPane);
+				  }
 				ArrayList<Button> buttons = new ArrayList<Button>();
 				// Label secondLabel = new Label("Friend relationship");
-				reflesh(gridPane);
-
+				
 				BorderPane secondaryLayout = new BorderPane();
 				Scene secondScene = new Scene(gridPane, 800, 600);
 				
@@ -139,11 +143,19 @@ public class Main extends Application {
             + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
         TextField centralUser = new TextField();
         centralUser.setMaxWidth(100);
+        central.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                String central = centralUser.getText();
+                network.setCentral(central);
+                infoMessage("Set " + central + " as central user");
+                reflesh(gridPane);
+            }
+        });
         HBox hb = new HBox();
         hb.getChildren().addAll(centralUser, central);
         hb.setSpacing(5);
         hb.setTranslateX(580);
-        gridPane.getChildren().add(hb);
+        gridPane.getChildren().addAll(hb);
 		
 		
 		for (int  i = 0; i < buttons.size(); i++) {
@@ -482,11 +494,23 @@ public class Main extends Application {
                     infoMessage("Shortest Path",header,path.toString());
                 }
             });
+            Button central = new Button("Set Central User");
+            central.setStyle("-fx-background-color: #FFC000; "
+                + "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );");
+            TextField centralUser = new TextField();
+            centralUser.setMaxWidth(100);
+            central.setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent event) {
+                    String central = centralUser.getText();
+                    network.setCentral(central);
+                    infoMessage("Set " + central + " as central user");
+                }
+            });
             // Vbox2
             vb2.setSpacing(20);
             vb2.setPadding(new Insets(190, 40, 0, 0));
             vb2.getChildren().addAll(muser,mutual,shortest,
-                shortestPath, ld, load, ex, exp, r2);
+                shortestPath, centralUser, central, ld, load, ex, exp, r2);
             vb2.setTranslateY(25);
             vb2.setAlignment(Pos.TOP_CENTER);
 
