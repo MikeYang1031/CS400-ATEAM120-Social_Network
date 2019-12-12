@@ -162,6 +162,13 @@ public class SocialNetwork implements SocialNetworkADT {
       return false;
     }
     // remove the user
+    for(int i = 0; i < users.size(); i++) {
+    	if(users.get(i).equals(person)) {
+    		
+    	personList.remove(i);
+    	}
+    }
+    users.remove(person);
     graph.removeVertex(person);
     recordOperations.add("r " + person);
     return true;
@@ -225,6 +232,7 @@ public class SocialNetwork implements SocialNetworkADT {
    */
   @Override
   public List<String> getShortestPath(String person1, String person2) {
+	  tempStore = new ArrayList<String>();
     if (users.contains(person1) && users.contains(person2)) {
       // if the userList doesn't contain two users, the return null
     } else {
@@ -489,11 +497,11 @@ public class SocialNetwork implements SocialNetworkADT {
    * 
    * @param file, the name of file in which we want to save the log to 
    */
-@Override
+ @Override
   public void saveToFile(File file) {
     try {
         
-      FileWriter fileWriter = new FileWriter(file);
+      FileWriter fileWriter = new FileWriter("log.txt");
       System.out.println(recordOperations.size());
       for (int i = 0; i < recordOperations.size(); i++) {
         String log = recordOperations.get(i);
